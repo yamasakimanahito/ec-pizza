@@ -21,6 +21,7 @@ public class OrderController {
 	@GetMapping("")
 	public String orderConfirm(String OrderId,Model model) {
 		Order order = orderConfirmService.GetOrderId(OrderId);
+		
 		model.addAttribute("order",order);
 		return "order_confirm";
 	}
