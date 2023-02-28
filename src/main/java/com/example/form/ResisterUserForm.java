@@ -21,18 +21,21 @@ public class ResisterUserForm {
 	private String email;
 	/** パスワード */
 	@Size(min=8, max=16, message="パスワードは8文字以上16文字以内で設定して下さい")
+	@NotBlank(message="パスワードを入力して下さい")
 	private String password;
 	/** 郵便番号 */
 	@Pattern(regexp="^[0-9]{3}-[0-9]{4}$", message="郵便番号はXXX-XXXXの形式で入力して下さい")
+	@NotBlank(message="郵便番号を入力して下さい")
 	private String zipcode;
 	/** 住所 */
 	@NotBlank(message="住所を入力して下さい")
 	private String address;
 	/** 電話番号 */
 	@Pattern(regexp="^[0-9]{4}-[0-9]{4}-[0-9]{4}$", message="電話番号はXXXX-XXXX-XXXXの形式で入力して下さい")
+	@NotBlank(message="電話番号を入力して下さい")
 	private String telephone;
 	/** 確認用パスワード */
-	@Size(min=8, max=16, message="確認用パスワードは8文字以上16文字以内で設定して下さい")
+	@NotBlank(message="確認用パスワードを入力して下さい")
 	private String confirmPassword;
 	public String getName() {
 		return name;
