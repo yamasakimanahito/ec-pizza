@@ -46,9 +46,16 @@
           <div class="header-right">
             <a href="item_list.html">商品一覧</a>
             <a href="register_admin.html">会員登録</a>
-            <a href="login.html" class="login">
-              <i class="fas fa-sign-in-alt"></i>ログイン
-            </a>
+            <div th:unless="${session.User}">
+              <a th:href="@{/LoginLogoutUser/toLogin}" class="login">
+                <i class="fas fa-sign-in-alt"></i>ログイン
+              </a>
+            </div>
+            <div th:if="${session.User}">
+              <a th:href="@{/LoginLogoutUser/logout}" class="logout">
+                <i class="fas fa-sign-in-alt"></i>ログアウト
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -57,19 +64,27 @@
       <div class="container">
         <div class="row login-page">
           <div class="col s12 z-depth-6 card-panel">
-            <div class="error" th:if="${errorMessage}"><p th:text="${errorMessage}">
-                      メールアドレスまたはパスワードが間違っています
-                    </p></div>
-            <form class="login-form" th:action="@{/LoginLogoutUser/login}" method="post">
+            <div class="error" th:if="${errorMessage}">
+              <p th:text="${errorMessage}">
+                メールアドレスまたはパスワードが間違っています
+              </p>
+            </div>
+            <form
+              class="login-form"
+              th:action="@{/LoginLogoutUser/login}"
+              method="post"
+            >
               <div class="row"></div>
               <div class="row">
                 <div class="input-field col s12">
                   <i class="material-icons prefix">mail_outline</i>
-                  <input class="validate" id="email" name="email" type="email" />
-                  <label
-                    for="email"
-                    data-error="wrong"
-                    data-success="right"
+                  <input
+                    class="validate"
+                    id="email"
+                    name="email"
+                    type="email"
+                  />
+                  <label for="email" data-error="wrong" data-success="right"
                     >メールアドレス</label
                   >
                 </div>
@@ -82,10 +97,7 @@
                 </div>
               </div>
               <div class="row login-btn">
-                <button
-                  class="btn"
-                  type="submit"
-                >
+                <button class="btn" type="submit">
                   <span>ログイン</span>
                 </button>
               </div>
