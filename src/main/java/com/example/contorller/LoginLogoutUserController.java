@@ -40,10 +40,11 @@ public class LoginLogoutUserController {
 	}
 
 	/**
+	 * フォームで受け取った情報でログインを行う.
 	 * 
-	 * @param form
-	 * @param model
-	 * @return
+	 * @param form  フォーム
+	 * @param model ログインできなかった場合エラーメッセージと共にログイン画面に遷移
+	 * @return Userをセッションスコープに保存し、ShowItemControllerに遷移
 	 */
 	@PostMapping("/login")
 	public String login(LoginLogoutUserForm form, Model model) {
@@ -53,8 +54,19 @@ public class LoginLogoutUserController {
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
 			return toLogin();
 		}
-		session.setAttribute("User", user);
+		session.setAttribute("User", user); // ログイン状態を保存する
 		return "redirect:/ShowItemList/showItem";
+	}
+
+	/**
+	 * ログアウトを行う.
+	 * 
+	 * @return ログイン画面
+	 */
+	@GetMapping("/logout")
+	public String logout() {
+		session.invalidate();
+		return "redirect:/LoginLogoutUser/toLogin";
 	}
 
 }

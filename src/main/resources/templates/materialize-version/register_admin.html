@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
   <head>
     <!--Import Google Icon Font-->
     <link
@@ -45,9 +45,16 @@
           <div class="header-right">
             <a href="item_list.html">商品一覧</a>
             <a href="register_admin.html">会員登録</a>
-            <a href="login.html" class="login">
-              <i class="fas fa-sign-in-alt"></i>ログイン
-            </a>
+            <div th:unless="${session.User}">
+              <a th:href="@{/LoginLogoutUser/toLogin}" class="login">
+                <i class="fas fa-sign-in-alt"></i>ログイン
+              </a>
+            </div>
+            <div th:if="${session.User}">
+              <a th:href="@{/LoginLogoutUser/logout}" class="logout">
+                <i class="fas fa-sign-in-alt"></i>ログアウト
+              </a>
+            </div>
           </div>
         </div>
       </div>
