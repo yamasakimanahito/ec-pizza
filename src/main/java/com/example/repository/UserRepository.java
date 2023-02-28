@@ -1,5 +1,7 @@
 package com.example.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -29,19 +31,19 @@ public class UserRepository {
 	/**
 	 * パスワードとEメールから顧客情報を取得します.
 	 * 
-	 * 
 	 * @param password フォームから受け取ったパスワード
 	 * @param email    フォームから受け取ったEメール
-	 * @return 該当する顧客情報
-	 * @exception org.springframework.dao.DataAccessException 従業員が存在しない場合は例外を発生します
+	 * @return 存在しない場合はnullを返します
 	 */
 	public User findByPasswordAndEmail(String password, String email) {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email).addValue("password", password);
 
 		String sql = "SELECT id, name, email, PASSWORD, zipcode, address, telephone FROM users WHERE email = :email AND PASSWORD = :password;";
 
-		User user = template.queryForObject(sql, param, USER_ROW_MAPPER);
-
-		return user;
+		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
+		if (userList.size() == 0) {
+			return null;
+		}
+		return userList.get(0);
 	}
 }
