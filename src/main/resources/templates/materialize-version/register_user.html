@@ -27,6 +27,12 @@
     <link rel="stylesheet" th:href="@{/css/order_confirm.css}" />
     <link rel="stylesheet" th:href="@{/css/order_finished.css}" />
     <link rel="stylesheet" th:href="@{/css/responsive.css}" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    
+    <script th:src="@{/js/get_address.js}"></script>
+
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -87,9 +93,9 @@
             <div class="input-field col s12">
               <input name="zipcode" th:field="*{zipcode}" id="zipcode" type="text" maxlength="8" />
               <label for="zipcode">郵便番号</label>
-              <button class="btn" type="button">
-                <span>住所検索</span>
-              </button>
+              <span class="input-group-btn">
+			<button id="search" type="button" class="btn btn-primary">住所検索</button>
+			</span>
             </div>
           </div>
           <div class="error" th:errors="*{address}">住所を入力して下さい</div>
@@ -156,6 +162,8 @@
       </div>
     </footer>
     <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      
+    
+    
   </body>
 </html>
