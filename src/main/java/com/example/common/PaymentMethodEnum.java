@@ -5,28 +5,28 @@ public enum PaymentMethodEnum {
 
 	// 定数に含めるフィールド、コンストラクタ、メソッドを定義
 	/** 現在のステータス */
-	private final int statusValue;
+	private final int paymentMethodValue;
 	/** 支払い方法 */
 	private final String paymentMethodName;
 
 	/**
 	 * コンストラクタ。
 	 */
-	private PaymentMethodEnum(int statusValue, String paymentMethodName) {
-		this.statusValue = statusValue;
+	private PaymentMethodEnum(int paymentMethodValue, String paymentMethodName) {
+		this.paymentMethodValue = paymentMethodValue;
 		this.paymentMethodName = paymentMethodName;
 
 	}
 
 	/**
-	 * statusからenumを取得
+	 * paymentMethodからenumを取得
 	 * 
-	 * @param status 番号
+	 * @param paymentMethod 番号
 	 * @return 渡された番号を含むenum
 	 */
-	public static PaymentMethodEnum of(int status) {
+	public static PaymentMethodEnum of(int paymentMethod) {
 		for (PaymentMethodEnum genderEnum : PaymentMethodEnum.values()) {
-			if (genderEnum.statusValue == status) {
+			if (genderEnum.paymentMethodValue == paymentMethod) {
 				return genderEnum;
 			}
 		}
@@ -34,7 +34,7 @@ public enum PaymentMethodEnum {
 	}
 
 	public int getStatusValue() {
-		return statusValue;
+		return paymentMethodValue;
 	}
 
 	public String getStatusName() {
