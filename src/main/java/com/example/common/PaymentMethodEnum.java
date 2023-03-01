@@ -1,5 +1,11 @@
 package com.example.common;
 
+/**
+ * 支払い方法を表すenum.
+ * 
+ * @author yoshimatsushouta
+ *
+ */
 public enum PaymentMethodEnum {
 	COD(1, "代金引換"), CREDIT_CARD(2, "クレジットカード");
 
