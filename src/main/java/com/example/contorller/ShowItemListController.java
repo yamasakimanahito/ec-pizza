@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.domain.Item;
 import com.example.service.ShowItemListService;
 
+/**
+ * 商品を表示させるためのコントローラ
+ * @author yamasakimanahito
+ *
+ */
 @Controller
 @RequestMapping("/showItem")
 public class ShowItemListController {
@@ -19,12 +24,22 @@ public class ShowItemListController {
 	@Autowired
 	private ShowItemListService showItemListService;
 	
+	/**
+	 * 商品一覧画面へフォワードします.
+	 * @return 商品一覧画面へ
+	 */
 	@GetMapping("/showItemList")
 	public String showItemList() {
 		
 		return "materialize-version/item_list";
 		
 	}
+	/**
+	 * 名前の一覧検索.
+	 * @param name　商品名
+	 * @param model　モデル
+	 * @return　商品一覧画面へ
+	 */
 	@PostMapping("/findByName")
 	public String findByName(String name,Model model) {
 		List<Item> itemList = showItemListService.showItemList(name);
