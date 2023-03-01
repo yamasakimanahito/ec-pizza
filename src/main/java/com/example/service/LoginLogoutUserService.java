@@ -1,6 +1,7 @@
 package com.example.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,8 @@ import com.example.repository.UserRepository;
 public class LoginLogoutUserService {
 	@Autowired
 	private UserRepository userReposiory;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	/**
 	 * 顧客のログインを行います.
@@ -28,7 +31,11 @@ public class LoginLogoutUserService {
 	 * 
 	 */
 	public User login(LoginLogoutUserForm form) {
-		User user = userReposiory.findByPasswordAndEmail(form.getPassword(), form.getEmail());
+		User user = userReposiory.findByEmail(form.getEmail());
+
+		if (!passwordEncoder.matches(form.getPassword(), user.getPassword())) {
+			return null;
+		}
 		return user;
 	}
 }
