@@ -34,9 +34,9 @@ public class ResisterUserController {
 	 * @param form フォーム
 	 * @return　ユーザー登録画面
 	 */
-	@GetMapping("/index")
-	public String index(ResisterUserForm form) {
-		return "register_user";
+	@GetMapping("/resister")
+	public String resister(ResisterUserForm form) {
+		return "/materialize-version/register_user";
 	};
 	
 	/**
@@ -49,18 +49,22 @@ public class ResisterUserController {
 	 */
 	@PostMapping("/resisterUser")
 	
-	public String resisterUser(ResisterUserForm form,  Model model) {
+	public String resisterUser(@Validated ResisterUserForm form, BindingResult result,  Model model) {
 		//* パスワード確認 *//
-//		if(!form.getConfirmPassword().equals(form.getPassword())) {
-//			result.rejectValue("confirmPassword", "", "パスワードと確認用パスワードが不一致です");
-//		}
+		if(!form.getConfirmationPassword().equals(form.getPassword())) {
+			result.rejectValue("confirmationPassword", "", "パスワードと確認用パスワードが不一致です");
+		}
 		
 		//*　メールアドレス重複確認 *//
+		User existUser = resisterUserService.findByEmail(form.getEmail());
+		if(existUser != null) {
+			result.rejectValue("email", "", "そのメールアドレスはすでに使われています");
+		} 
 		
 		
-//		if(result.hasErrors()) {
-//			return "index";
-//		}
+		if(result.hasErrors()) {
+			return resister(form);
+		}
 		
 		
 		//* ユーザー情報登録 *//
@@ -73,8 +77,9 @@ public class ResisterUserController {
 		user.setTelephone(form.getTelephone());
 		model.addAttribute("user", user);
 		resisterUserService.resisterUser(user);
-		return "/login";
+		return "redirect:/LoginLogoutUser/toLogin";
 	}
 	
-
+	
+	
 }

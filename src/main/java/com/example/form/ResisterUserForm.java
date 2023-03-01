@@ -12,9 +12,12 @@ import jakarta.validation.constraints.Size;
  *
  */
 public class ResisterUserForm {
-	/** 顧客氏名 */
+	/** 名字 */
+	@NotBlank(message="名字を入力して下さい")
+	private String lastName;
+	/** 名前 */
 	@NotBlank(message="名前を入力して下さい")
-	private String name;
+	private String firstName;
 	/** Eメール */
 	@Email(message="メールアドレスの形式が不正です")
 	@NotBlank(message="メールアドレスを入力して下さい")
@@ -31,17 +34,28 @@ public class ResisterUserForm {
 	@NotBlank(message="住所を入力して下さい")
 	private String address;
 	/** 電話番号 */
-	@Pattern(regexp="^[0-9]{4}-[0-9]{4}-[0-9]{4}$", message="電話番号はXXXX-XXXX-XXXXの形式で入力して下さい")
+	@Pattern(regexp="^[0-9]{2,4}-[0-9]{2,4}-[0-9]{3,4}$", message="電話番号はXXXX-XXXX-XXXXの形式で入力して下さい")
 	@NotBlank(message="電話番号を入力して下さい")
 	private String telephone;
 	/** 確認用パスワード */
 	@NotBlank(message="確認用パスワードを入力して下さい")
-	private String confirmPassword;
+	private String confirmationPassword;
+	
 	public String getName() {
-		return name;
+		return getLastName() + getFirstName();
 	}
-	public void setName(String name) {
-		this.name = name;
+	
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 	public String getEmail() {
 		return email;
@@ -73,16 +87,17 @@ public class ResisterUserForm {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-	public String getConfirmPassword() {
-		return confirmPassword;
+	public String getConfirmationPassword() {
+		return confirmationPassword;
 	}
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
+	public void setConfirmationPassword(String confirmationPassword) {
+		this.confirmationPassword = confirmationPassword;
 	}
 	@Override
 	public String toString() {
-		return "ResisterUserForm [name=" + name + ", email=" + email + ", password=" + password + ", zipcode=" + zipcode
-				+ ", address=" + address + ", telephone=" + telephone + ", confirmPassword=" + confirmPassword + "]";
+		return "ResisterUserForm [lastName=" + lastName + ", firstName=" + firstName + ", email=" + email
+				+ ", password=" + password + ", zipcode=" + zipcode + ", address=" + address + ", telephone="
+				+ telephone + ", confirmPassword=" + confirmationPassword + "]";
 	}
 	
 	

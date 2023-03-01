@@ -19,13 +19,20 @@ public class ResisterUserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	/**
 	 * ユーザー情報を登録します.
 	 * 
-	 * @param user　ユーザー情報
+	 * @param user ユーザー情報
 	 */
 	public void resisterUser(User user) {
+		System.out.println("userの中身:" + user);
 		userRepository.save(user);
+	}
+
+	public User findByEmail(String email) {
+		User user = userRepository.findByEmail(email);
+		return user;
+
 	}
 }
