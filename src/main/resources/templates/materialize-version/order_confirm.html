@@ -69,10 +69,10 @@
         <div class="row">
           <table class="striped">
             <thead>
-              <tr>
-                <th class="cart-table-th">商品名</th>
-                <th>サイズ、価格(税抜)、数量</th>
-                <th>トッピング、価格(税抜)</th>
+              <tr th:each="item:${order}">
+                <th th:text="${item.orderItemList.name}">商品名</th>
+                <th th:text="${item.orderItemList.size}">サイズ、価格(税抜)、数量</th>
+                <th th:text="${}">トッピング、価格(税抜)</th>
                 <th>小計</th>
               </tr>
             </thead>
