@@ -45,7 +45,7 @@
           <div class="header-right">
             <a href="item_list.html">商品一覧</a>
             <a href="register_admin.html">会員登録</a>
-            <a href="cart_list.html">
+            <a href="cart_list.html" th:href="@{/shoppingCart/showCart}">
               <i class="fas fa-shopping-cart"> </i>カート
             </a>
             <div th:unless="${session.User}">
@@ -64,32 +64,34 @@
         </div>
       </div>
     </header>
+    <form th:action="@{/shoppingCart/insertCart}" th:object="${shoppingCartForm}" method="post">
     <div class="top-wrapper">
       <div class="container">
-        <h1 class="page-title">Hawaiianパラダイス</h1>
+      <input type="hidden" th:value="1" th:field="*{itemId}">
+        <span class="page-title" >Hawaiianパラダイス</span>
         <div class="row">
           <div class="row item-detail">
             <div class="item-icon">
               <img src="img/1.jpg" />
             </div>
-            <div class="item-intro">
+            <div class="item-intro" >
               ハワイで取れる名産物でかつオーガニックな食料がふんだんに使われたローカルフーズです。健康志向の方に大人気の商品です。
             </div>
           </div>
           <div class="row item-size">
-            <div class="item-hedding">サイズ</div>
+            <div class="item-hedding" >サイズ</div>
             <div>
               <label>
                 <input id="size-m" name="size" type="radio" checked="checked" />
-                <span>
-                  &nbsp;<span class="price">Ｍ</span
+                <span> 
+                  &nbsp;<span class="price" th:value='M' th:field=*{size}>Ｍ</span
                   >&nbsp;&nbsp;1,380円(税抜)</span
                 >
               </label>
               <label>
                 <input id="size-l" name="size" type="radio" />
                 <span>
-                  &nbsp;<span class="price">Ｌ</span
+                  &nbsp;<span class="price" th:value='L' th:field=*{size}>Ｌ</span
                   >&nbsp;&nbsp;2,380円(税抜)</span
                 >
               </label>
@@ -145,10 +147,10 @@
             </div>
           </div>
           <div class="row item-quantity">
-            <div class="item-hedding item-hedding-quantity">数量</div>
+            <div class="item-hedding item-hedding-quantity" >数量</div>
             <div class="item-quantity-selectbox">
               <div class="input-field col s12">
-                <select class="browser-default">
+                <select class="browser-default" th:field="*{quantity}">
                   <option value="" disabled selected>選択して下さい</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -172,8 +174,7 @@
           <div class="row item-cart-btn">
             <button
               class="btn"
-              type="button"
-              onclick="location.href='cart_list.html'"
+              type="submit"
             >
               <i class="material-icons left">add_shopping_cart</i>
               <span>カートに入れる</span>
@@ -183,6 +184,7 @@
       </div>
       <!-- end container -->
     </div>
+      </form>
     <!-- end top-wrapper -->
     <footer>
       <div class="container">

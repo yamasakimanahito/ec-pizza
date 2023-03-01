@@ -10,12 +10,24 @@ import java.util.List;
  */
 public class ShoppingCartForm {
 
+	/**
+	 * 商品ID
+	 */
 	private Integer itemId;
 
+	/**
+	 * 数量
+	 */
 	private Integer quantity;
 
-	private Character size;
+	/**
+	 * サイズ
+	 */
+	private String size;
 
+	/**
+	 * トッピングリスト
+	 */
 	private List<Integer> toppingIdLis;
 
 	public Integer getItemId() {
@@ -34,11 +46,11 @@ public class ShoppingCartForm {
 		this.quantity = quantity;
 	}
 
-	public Character getSize() {
+	public String getSize() {
 		return size;
 	}
 
-	public void setSize(Character size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 
@@ -59,7 +71,7 @@ public class ShoppingCartForm {
 	public ShoppingCartForm() {
 	}
 
-	public ShoppingCartForm(Integer userId, Integer quantity, Character size, List<Integer> toppingIdLis) {
+	public ShoppingCartForm(Integer userId, Integer quantity, String size, List<Integer> toppingIdLis) {
 		super();
 		this.itemId = userId;
 		this.quantity = quantity;

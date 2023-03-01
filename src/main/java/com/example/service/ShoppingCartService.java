@@ -8,10 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.domain.Order;
 import com.example.domain.OrderItem;
 import com.example.domain.OrderTopping;
+import com.example.domain.User;
 import com.example.form.ShoppingCartForm;
 import com.example.repository.OrderItemRepository;
 import com.example.repository.OrderRepository;
 import com.example.repository.OrderToppingRepository;
+
+import jakarta.servlet.http.HttpSession;
 
 /**
  * カート関連サービス.
@@ -21,7 +24,7 @@ import com.example.repository.OrderToppingRepository;
  */
 
 @Service
-@Transactional
+//@Transactional
 public class ShoppingCartService {
 
 	@Autowired
@@ -33,6 +36,9 @@ public class ShoppingCartService {
 	@Autowired
 	private OrderItemRepository orderitemRepository;
 
+	@Autowired
+	private HttpSession session;
+
 	/**
 	 * 注文情報インサート業務処理.
 	 * 
@@ -40,29 +46,29 @@ public class ShoppingCartService {
 	 * @param userId ユーザーID
 	 */
 	public void insertCat(ShoppingCartForm form, Integer userId) {
-		Order orderStatus = orderRepository.findByUserIdAndStatus(userId, 0);
-		if (orderStatus == null) {
-
+		Order orderList = orderRepository.findByUserIdAndStatus(userId, 1);
+		if (orderList == null) {
 			// 注文
 			Order order = new Order();
-			order.setUserId(userId);
+			order.setUserId(1);
 			order.setStatus(0);
+			order.setTotalPrice(0);
 			Order orderInfo = orderRepository.insert(order);
-
+			System.out.println(orderInfo);
 			// 注文商品
 			OrderItem orderItem = new OrderItem();
 			BeanUtils.copyProperties(form, orderItem);
+			System.out.println(orderInfo.getId());
 			orderItem.setOrderId(orderInfo.getId());
-
 			OrderItem orderItemInfo = orderitemRepository.insert(orderItem);
 
 			// 注文トッピング
 			OrderTopping orderTopping = new OrderTopping();
-			for (Integer topping : form.getToppingIdLis()) {
+			System.out.println(orderItemInfo.getId());
+				orderTopping.setToppingId(1);
 				orderTopping.setOrderItemId(orderItemInfo.getId());
-				orderTopping.setToppingId(topping);
 				orderToppingRepository.insert(orderTopping);
-			}
+			
 		}
 
 	}
@@ -77,8 +83,10 @@ public class ShoppingCartService {
 	}
 
 	public OrderItem showCart() {
-		OrderItem orderItem = new OrderItem();
-		OrderItem orderItemList = orderitemRepository.findByOrderId(orderItem.getOrderId());
+		User user = (User) session.getAttribute("User");
+		Order order = orderRepository.load(3);
+         System.out.println("111111");
+		OrderItem orderItemList = orderitemRepository.findByOrderId(order.getId());
 		return orderItemList;
 
 	}

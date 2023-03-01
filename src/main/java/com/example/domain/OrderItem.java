@@ -18,7 +18,7 @@ public class OrderItem {
 	/** 数量 */
 	private Integer quantity;
 	/** 商品サイズ */
-	private Character size;
+	private String size;
 	/** 商品 */
 	private Item item;
 	/** 注文トッピングリスト */
@@ -34,13 +34,13 @@ public class OrderItem {
 // (商品(M or L) + (トッピング(M or L(商品と連動)) * トッピング数)) * 数量 
 		int toppingResult = 0;
 
-		if (this.size == 'M') {
+		if (this.size == "M") {
 			for (OrderTopping orderTopping : orderToppingList) {
 				toppingResult += orderTopping.getTopping().getPriceM();
 			}
 			int itemPrice = ((item.getPriceM() + toppingResult) * this.quantity);
 			return itemPrice;
-		} else if (this.size == 'L') {
+		} else if (this.size == "L") {
 			for (OrderTopping orderTopping : orderToppingList) {
 				toppingResult += orderTopping.getTopping().getPriceL();
 			}
@@ -84,11 +84,11 @@ public class OrderItem {
 		this.quantity = quantity;
 	}
 
-	public Character getSize() {
+	public String getSize() {
 		return size;
 	}
 
-	public void setSize(Character size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 
@@ -114,4 +114,5 @@ public class OrderItem {
 				+ ", size=" + size + ", item=" + item + ", orderToppingList=" + orderToppingList + "]";
 	}
 
+	
 }
