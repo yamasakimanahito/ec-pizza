@@ -16,35 +16,36 @@
       href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/common.css" />
-    <link rel="stylesheet" href="css/header.css" />
-    <link rel="stylesheet" href="css/footer.css" />
-    <link rel="stylesheet" href="css/register_admin.css" />
-    <link rel="stylesheet" href="css/login.css" />
-    <link rel="stylesheet" href="css/item_list.css" />
-    <link rel="stylesheet" href="css/item_detail.css" />
-    <link rel="stylesheet" href="css/cart_list.css" />
-    <link rel="stylesheet" href="css/order_confirm.css" />
-    <link rel="stylesheet" href="css/order_finished.css" />
-    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+    <link rel="stylesheet" th:href="@{/css/register_admin.css}" />
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/item_list.css}" />
+    <link rel="stylesheet" th:href="@{/css/item_detail.css}" />
+    <link rel="stylesheet" th:href="@{/css/cart_list.css}" />
+    <link rel="stylesheet" th:href="@{/css/order_confirm.css}" />
+    <link rel="stylesheet" th:href="@{/css/order_finished.css}" />
+    <link rel="stylesheet" th:href="@{/css/responsive.css}" />
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ラクラクピザ</title>
   </head>
+
   <body>
     <header>
       <div class="container">
         <div class="header">
           <div class="header-left">
-            <a href="top.html">
-              <img class="logo" src="img/header_logo.png" />
+            <a th:href="@{/showItem/showItemList}">
+              <img class="logo" th:src="@{/img/header_logo.png}" />
             </a>
           </div>
 
           <div class="header-right">
-            <a href="item_list.html">商品一覧</a>
-            <a href="register_admin.html">会員登録</a>
+            <a th:href="@{/showItem/showItemList}">商品一覧</a>
+            <a th:href="@{/resister}">会員登録</a>
             <a href="#"><i class="fas fa-shopping-cart"></i>カート</a>
             <div th:unless="${session.User}">
               <a th:href="@{/LoginLogoutUser/toLogin}" class="login">
@@ -62,6 +63,7 @@
         </div>
       </div>
     </header>
+     
     <div class="top-wrapper">
       <div class="container">
         <h1 class="page-title">注文内容確認</h1>
@@ -69,10 +71,10 @@
         <div class="row">
           <table class="striped">
             <thead>
-              <tr th:each="item:${order}">
-                <th th:text="${item.orderItemList.name}">商品名</th>
-                <th th:text="${item.orderItemList.size}">サイズ、価格(税抜)、数量</th>
-                <th th:text="${}">トッピング、価格(税抜)</th>
+              <tr >
+                <th>商品名</th>
+                <th >サイズ、価格(税抜)、数量</th>
+                <th>トッピング、価格(税抜)</th>
                 <th>小計</th>
               </tr>
             </thead>
@@ -145,86 +147,96 @@
           <div>消費税：8,000円</div>
           <div>ご注文金額合計：38,000円 (税込)</div>
         </div>
-
+       <form th:action="@{/orderCon/order}" method="post" th:object="${orderForm}">
         <h2 class="page-title">お届け先情報</h2>
         <div class="order-confirm-delivery-info">
           <div class="row">
+            <div th:errors="*{destinationName}" style="color:red" ></div>
             <div class="input-field">
-              <input id="name" type="text" />
+              <input id="name"  name = "destinationName" type="text" th:field="*{destinationName}" />
               <label for="name">お名前</label>
             </div>
           </div>
           <div class="row">
+             <div th:errors="*{destinationEmail}" style="color:red"></div>
             <div class="input-field">
-              <input id="email" type="email" />
+              <input id="email" name ="destinationEmail" type="email" th:field="*{destinationEmail}"/>
               <label for="email">メールアドレス</label>
             </div>
           </div>
           <div class="row">
+    
+             <div th:errors="*{destinationZipcode}" style="color:red"></div>
             <div class="input-field">
-              <input id="zipcode" type="text" maxlength="7" />
+              <input id="zipcode"name="destinationZipcode"  type="text" maxlength="8" th:field="*{destinationZipcode}"/>
               <label for="zipcode">郵便番号</label>
-              <button class="btn" type="button">
+              <button class="btn" type="button" id="get_address_btn">
                 <span>住所検索</span>
               </button>
             </div>
           </div>
           <div class="row">
+             <div th:errors="*{destinationAddress}" style="color:red"></div>
             <div class="input-field">
-              <input id="address" type="text" />
+              <input id="address" name="destinationAddress" type="text" th:field="*{destinationAddress}" />
               <label for="address">住所</label>
             </div>
           </div>
+         
           <div class="row">
+            <div th:errors="*{destinationTel}" style="color:red"></div>
             <div class="input-field">
-              <input id="tel" type="tel" />
+              <input id="tel" name="destinationTel" type="tel" th:field="*{destinationTel}" />
               <label for="tel">電話番号</label>
             </div>
           </div>
           <div class="row order-confirm-delivery-datetime">
+           <div th:errors="*{deliveryDate}" style="color:red"></div>
             <div class="input-field">
-              <input id="deliveryDate" type="date" />
+             <input id="deliveryDate" name="deliveryDate" type="date" th:field="*{deliveryDate}"/>
               <label for="address">配達日時</label>
             </div>
+             <div th:errors="*{deliveryTime}" style="color:red"></div>
             <label class="order-confirm-delivery-time">
               <input
                 name="deliveryTime"
                 type="radio"
-                value="10時"
+                value="10"
                 checked="checked"
+                th:field="*{deliveryTime}"
               />
               <span>10時</span>
             </label>
             <label class="order-confirm-delivery-time">
-              <input name="deliveryTime" type="radio" value="11時" />
+              <input name="deliveryTime" type="radio" value="11" th:field="*{deliveryTime}" />
               <span>11時</span>
             </label>
             <label class="order-confirm-delivery-time">
-              <input name="deliveryTime" type="radio" value="12時" />
+              <input name="deliveryTime" type="radio" value="12" th:field="*{deliveryTime}"/>
               <span>12時</span>
             </label>
             <label class="order-confirm-delivery-time">
-              <input name="deliveryTime" type="radio" value="13時" />
+              <input name="deliveryTime" type="radio" value="13" th:field="*{deliveryTime}"/>
               <span>13時</span>
             </label>
             <label class="order-confirm-delivery-time">
-              <input name="deliveryTime" type="radio" value="14時" />
+              <input name="deliveryTime" type="radio" value="14" th:field="*{deliveryTime}"/>
               <span>14時</span>
             </label>
             <label class="order-confirm-delivery-time">
-              <input name="deliveryTime" type="radio" value="15時" />
+              <input name="deliveryTime" type="radio" value="15" th:field="*{deliveryTime}"/>
               <span>15時</span>
             </label>
             <label class="order-confirm-delivery-time">
-              <input name="deliveryTime" type="radio" value="16時" />
+              <input name="deliveryTime" type="radio" value="16" th:field="*{deliveryTime}"/>
               <span>16時</span>
             </label>
             <label class="order-confirm-delivery-time">
-              <input name="deliveryTime" type="radio" value="17時" />
+              <input name="deliveryTime" type="radio" value="17" th:field="*{deliveryTime}"/>
               <span>17時</span>
             </label>
             <label class="order-confirm-delivery-time">
-              <input name="deliveryTime" type="radio" value="18時" />
+              <input name="deliveryTime" type="radio" value="18" th:field="*{deliveryTime}"/>
               <span>18時</span>
             </label>
           </div>
@@ -235,39 +247,50 @@
           <span>
             <label class="order-confirm-payment-method-radio">
               <input
-                name="paymentMethod"
+                name="status"
                 type="radio"
-                value="1"
+                th:value="1"
                 checked="checked"
               />
               <span>代金引換</span>
             </label>
             <label class="order-confirm-payment-method-radio">
-              <input name="paymentMethod" type="radio" value="2" />
+              <input name="status" type="radio" th:value="2" />
               <span>クレジットカード</span>
             </label>
           </span>
         </div>
         <div class="row order-confirm-btn">
-          <button
+         <button
             class="btn"
-            type="button"
-            onclick="location.href='order_finished.html'"
+            type="submit"
+            
           >
-            <span>この内容で注文する</span>
+            <span>内容を注文する</span>
+            
           </button>
+          <input type="hidden"  name="id" th:value="1">
+       
         </div>
+       </form>
       </div>
+      
       <!-- end container -->
     </div>
     <!-- end top-wrapper -->
+      
     <footer>
       <div class="container">
-        <img src="img/header_logo.png" />
+        <img th:src="@{/img/header_logo.png}" />
         <p>本格ピザをあなたにお届け！</p>
       </div>
     </footer>
+     
+    
     <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js></script>
+     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+            <script th:src="@{/js/address.js}"></script>
+   
   </body>
 </html>
