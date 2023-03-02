@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.domain.User;
+import com.example.domain.UserInfo;
 import com.example.form.ResisterUserForm;
 import com.example.service.ResisterUserService;
 
@@ -58,7 +58,7 @@ public class ResisterUserController {
 		}
 
 		// * メールアドレス重複確認 *//
-		User existUser = resisterUserService.findByEmail(form.getEmail());
+		UserInfo existUser = resisterUserService.findByEmail(form.getEmail());
 		if (existUser != null) {
 			result.rejectValue("email", "", "そのメールアドレスはすでに使われています");
 		}
@@ -68,7 +68,7 @@ public class ResisterUserController {
 		}
 		form.setPassword(passwordEncoder.encode(form.getPassword()));
 		// * ユーザー情報登録 *//
-		User user = new User();
+		UserInfo user = new UserInfo();
 		user.setName(form.getName());
 		user.setEmail(form.getEmail());
 		user.setPassword(form.getPassword());
@@ -77,7 +77,7 @@ public class ResisterUserController {
 		user.setTelephone(form.getTelephone());
 		model.addAttribute("user", user);
 		resisterUserService.resisterUser(user);
-		return "redirect:/LoginLogoutUser/toLogin";
+		return "redirect:/toLogin";
 	}
 
 }

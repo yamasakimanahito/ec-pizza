@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import com.example.domain.OrderItem;
-import com.example.domain.User;
+import com.example.domain.UserInfo;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
