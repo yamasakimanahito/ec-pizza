@@ -2,6 +2,7 @@ package com.example.domain;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,7 +48,13 @@ public class Order {
 	 * @TODO 処理未
 	 */
 	public int getTax() {
-		return 0;
+		List<OrderItem> orderItemList = new ArrayList<>();
+		int subTotal = 0;
+		for (OrderItem orderItem : orderItemList) {
+			subTotal += orderItem.getSubTotal();
+		}
+		int tax= subTotal/10;
+		return tax;
 	}
 
 	/**
@@ -57,7 +64,14 @@ public class Order {
 	 * @TODO 処理未
 	 */
 	public int getCalcTotalPrice() {
-		return 0;
+		List<OrderItem> orderItemList = new ArrayList<>();
+		int subTotal = 0;
+		for (OrderItem orderItem : orderItemList) {
+			subTotal += orderItem.getSubTotal();
+		}
+		int tax= subTotal/10;
+		int totalPrice=subTotal+tax;
+		return totalPrice;
 	}
 
 	public Integer getId() {
