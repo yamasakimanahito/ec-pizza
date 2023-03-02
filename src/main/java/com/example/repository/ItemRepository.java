@@ -1,5 +1,7 @@
 package com.example.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -40,5 +42,16 @@ public class ItemRepository {
 		Item item = template.queryForObject(sql, param, ITEM_ROW_MAPPER);
 
 		return item;
+	}
+	
+	/**
+	 * 全件検索を行います.
+	 * 
+	 * @return　商品情報リスト
+	 */
+	public List<Item> findAll() {
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY id";
+		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
+		return itemList;
 	}
 }
