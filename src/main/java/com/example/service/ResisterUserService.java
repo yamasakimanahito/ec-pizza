@@ -26,7 +26,6 @@ public class ResisterUserService {
 	 * @param user ユーザー情報
 	 */
 	public void resisterUser(User user) {
-		System.out.println("userの中身:" + user);
 		userRepository.save(user);
 	}
 
