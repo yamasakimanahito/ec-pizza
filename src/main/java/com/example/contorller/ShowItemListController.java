@@ -25,26 +25,39 @@ public class ShowItemListController {
 	private ShowItemListService showItemListService;
 	
 	/**
-	 * 商品一覧画面へフォワードします.
-	 * @return 商品一覧画面へ
+	 * 商品一覧画面に遷移.
+	 * 
+	 * @param model　モデル
+	 * @return　商品一覧画面
 	 */
+	
 	@GetMapping("/showItemList")
-	public String showItemList() {
-		
-		return "materialize-version/item_list";
-		
+	public String showItemList(Model model) {
+		List<Item> itemList = showItemListService.findAll();
+		model.addAttribute("itemList", itemList);
+		return "/materialize-version/item_list";
 	}
+	
+
 	/**
 	 * 名前の一覧検索.
 	 * @param name　商品名
 	 * @param model　モデル
 	 * @return　商品一覧画面へ
 	 */
+	
 	@PostMapping("/findByName")
 	public String findByName(String name,Model model) {
 		List<Item> itemList = showItemListService.showItemList(name);
+		if(itemList.size() == 0) {
+			model.addAttribute("result", "該当するものがありません");
+			return showItemList(model);
+		} else {
 		model.addAttribute("itemList",itemList);
 		return "materialize-version/item_list" ;
+		}
+		
 	}
 
 }
+

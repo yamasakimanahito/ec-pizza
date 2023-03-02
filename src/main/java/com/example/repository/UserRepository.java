@@ -68,21 +68,22 @@ public class UserRepository {
 		}
 		return userList.get(0);
 	}
-	
+
 	/**
 	 * メールアドレスから顧客情報を取得します.
 	 * 
-	 * @param email　フォームから受け取ったEメール
-	 * @return	存在しない場合はnullを返します
+	 * @param email フォームから受け取ったEメール
+	 * @return 存在しない場合はnullを返します
 	 */
-	public User findByEmail(String email){
-		
-		String sql = "SELECT id, name, email, passWord, zipcode, address, telephone from users where email = :email order by id;";
+	public User findByEmail(String email) {
+
+		String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE email=:email;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
-		List<User> userList= template.query(sql, param, USER_ROW_MAPPER);
-		if(userList.size() == 0) {
+		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
+		if (userList.size() == 0) {
 			return null;
 		}
 		return userList.get(0);
 	}
+
 }
