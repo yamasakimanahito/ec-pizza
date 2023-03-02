@@ -28,7 +28,7 @@ public class ShoppingCartForm {
 	/**
 	 * トッピングリスト
 	 */
-	private List<Integer> toppingIdLis;
+	private List<Integer> toppingIdList;
 
 	public Integer getItemId() {
 		return itemId;
@@ -54,29 +54,23 @@ public class ShoppingCartForm {
 		this.size = size;
 	}
 
-	public List<Integer> getToppingIdLis() {
-		return toppingIdLis;
+	public List<Integer> getToppingIdList() {
+		return toppingIdList;
 	}
 
-	public void setToppingIdLis(List<Integer> toppingIdLis) {
-		this.toppingIdLis = toppingIdLis;
+	public void setToppingIdList(List<Integer> toppingIdList) {
+		this.toppingIdList = toppingIdList;
 	}
 
-	@Override
-	public String toString() {
-		return "ShoppingCartForm [userId=" + itemId + ", quantity=" + quantity + ", size=" + size + ", toppingIdLis="
-				+ toppingIdLis + "]";
+	public ShoppingCartForm(Integer itemId, Integer quantity, String size, List<Integer> toppingIdList) {
+		super();
+		this.itemId = itemId;
+		this.quantity = quantity;
+		this.size = size;
+		this.toppingIdList = toppingIdList;
 	}
 
 	public ShoppingCartForm() {
+		// TODO Auto-generated constructor stub
 	}
-
-	public ShoppingCartForm(Integer userId, Integer quantity, String size, List<Integer> toppingIdLis) {
-		super();
-		this.itemId = userId;
-		this.quantity = quantity;
-		this.size = size;
-		this.toppingIdLis = toppingIdLis;
-	}
-
 }

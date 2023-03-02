@@ -1,11 +1,16 @@
 package com.example.contorller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.domain.Item;
+import com.example.domain.Order;
 import com.example.domain.OrderItem;
 import com.example.domain.User;
 import com.example.form.ShoppingCartForm;
@@ -29,12 +34,6 @@ public class ShoppingCartController {
 	@Autowired
 	private ShoppingCartService shoppingcartService;
 
-	
-	@GetMapping("/itemDetail")
-	public String detail(ShoppingCartForm form) {
-		return "/materialize-version/item_detail";
-	}
-	
 	/**
 	 * 商品をカートに追加する.
 	 * 
@@ -43,16 +42,12 @@ public class ShoppingCartController {
 	 */
 	@PostMapping("/insertCart")
 	public String insertCart(ShoppingCartForm form) {
+		System.out.println(form.getSize());
+		System.out.println(form.getItemId());
+		System.out.println(form.getQuantity());
+		System.out.println(form.getToppingIdList());
 		User user = (User) session.getAttribute("User");
-		form.setItemId(1);
-		form.setQuantity(3);
-		form.setSize("M");
 		shoppingcartService.insertCat(form, 1);
-		System.out.println("1");
-		OrderItem orderItemList = shoppingcartService.showCart();
-		System.out.println("2");
-
-		session.setAttribute("orderItemList", orderItemList);
 
 		return "redirect:/shoppingCart/toCart";
 	}
@@ -63,7 +58,15 @@ public class ShoppingCartController {
 	 * @return カートリスト
 	 */
 	@GetMapping("/toCart")
-	public String toCartList() {
+	public String toCartList(Model model) {
+		User user = (User) session.getAttribute("User");
+		List<Order> order = shoppingcartService.showCart(1);
+		
+		for(Order orderList : order) {
+			List<OrderItem> orderItem = orderList.getOrderItemList();
+				model.addAttribute("orderItemList", orderItem);
+			}
+		
 		return "/materialize-version/cart_list";
 	}
 
@@ -73,9 +76,9 @@ public class ShoppingCartController {
 	 * @return カートリスト
 	 */
 	@PostMapping("/showCart")
-	public String showCart() {
-		OrderItem orderItemList = shoppingcartService.showCart();
-		session.setAttribute("orderItemList", orderItemList);
+	public String showCart(Model model) {
+		List<Order> orderList = shoppingcartService.showCart(1);
+		model.addAttribute("orderList", orderList);
 		return "/materialize-version/cart_list";
 	}
 
@@ -85,8 +88,10 @@ public class ShoppingCartController {
 	 * @param orderItemId 注文商品ID
 	 * @return toCartへリダイレクト
 	 */
-	@PostMapping("/deleteCart")
+	@GetMapping("/deleteCart")
 	public String deleteCartItems(Integer orderItemId) {
+		System.out.println(orderItemId);
+		System.out.println("mamam");
 		shoppingcartService.deleteCartContents(orderItemId);
 		return "redirect:/shoppingCart/toCart";
 	}

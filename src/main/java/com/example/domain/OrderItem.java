@@ -24,33 +24,7 @@ public class OrderItem {
 	/** 注文トッピングリスト */
 	private List<OrderTopping> orderToppingList;
 
-	/**
-	 * 1商品に対する小計を取得する.
-	 * 
-	 * @return 小計金額
-	 * @HACK 動作確認未 似たような処理が多い
-	 */
-	public int getSubTotal() {
-// (商品(M or L) + (トッピング(M or L(商品と連動)) * トッピング数)) * 数量 
-		int toppingResult = 0;
-
-		if (this.size == "M") {
-			for (OrderTopping orderTopping : orderToppingList) {
-				toppingResult += orderTopping.getTopping().getPriceM();
-			}
-			int itemPrice = ((item.getPriceM() + toppingResult) * this.quantity);
-			return itemPrice;
-		} else if (this.size == "L") {
-			for (OrderTopping orderTopping : orderToppingList) {
-				toppingResult += orderTopping.getTopping().getPriceL();
-			}
-			int itemPrice = ((item.getPriceL() + toppingResult) * this.quantity);
-			return itemPrice;
-		} else {
-			return 0;
-		}
-
-	}
+	
 
 	public Integer getId() {
 		return id;
