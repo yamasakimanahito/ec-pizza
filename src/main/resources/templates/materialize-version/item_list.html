@@ -77,6 +77,7 @@
             <span>検　索</span>
           </button>
         </form>
+         <div th:text="${result}"></div>
       </div>
     </div>
 
@@ -85,7 +86,6 @@
     <div class="item-wrapper">
       <div class="container">
         <div class="items">
-          <div th:text="${result}"></div>
           <div th:each="item:${itemList}" class="item">
             <div class="item-icon">
               <img th:src="@{/img/} + ${item.imagePath}" />
