@@ -29,10 +29,8 @@ public class ShowItemDetailController {
 	 * @return 商品詳細画面へ遷移
 	 */
 	@GetMapping("/ToItemDetail")
-	public String showItemDetail(Integer itemId, Model model) {
-		// 仮(showItemList完成後消す)
-		itemId = 1;
-		Item item = showItemDetailService.showItemDetail(itemId);
+	public String showItemDetail(Integer id, Model model) {
+		Item item = showItemDetailService.showItemDetail(id);
 		model.addAttribute("Item", item);
 		return "/materialize-version/item_detail.html";
 	}
