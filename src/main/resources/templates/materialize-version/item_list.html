@@ -16,17 +16,20 @@
       href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/common.css" />
-    <link rel="stylesheet" href="css/header.css" />
-    <link rel="stylesheet" href="css/footer.css" />
-    <link rel="stylesheet" href="css/register_admin.css" />
-    <link rel="stylesheet" href="css/login.css" />
-    <link rel="stylesheet" href="css/item_list.css" />
-    <link rel="stylesheet" href="css/item_detail.css" />
-    <link rel="stylesheet" href="css/cart_list.css" />
-    <link rel="stylesheet" href="css/order_confirm.css" />
-    <link rel="stylesheet" href="css/order_finished.css" />
-    <link rel="stylesheet" href="css/responsive.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+    <link rel="stylesheet" th:href="@{/css/register_admin.css}" />
+    <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" th:href="@{/css/item_list.css}" />
+    <link rel="stylesheet" th:href="@{/css/item_detail.css}" />
+    <link rel="stylesheet" th:href="@{/css/cart_list.css}" />
+    <link rel="stylesheet" th:href="@{/css/order_confirm.css}" />
+    <link rel="stylesheet" th:href="@{/css/order_finished.css}" />
+    <link rel="stylesheet" th:href="@{/css/responsive.css}" />
+    <script th:src="@{/js/item_deail.js}"></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -38,7 +41,7 @@
         <div class="header">
           <div class="header-left">
             <a href="top.html">
-              <img class="logo" src="img/header_logo.png" />
+              <img class="logo" th:src="@{/img/header_logo.png}" />
             </a>
           </div>
 
@@ -67,10 +70,10 @@
     <!-- search form -->
     <div class="search-wrapper">
       <div class="container">
-        <form method="post" class="search-form">
+        <form th:action="@{/showItem/findByName}" method="post" class="search-form">
           <input type="text" name="name" class="search-name-input" />
 
-          <button class="btn search-btn" type="button">
+          <button class="btn search-btn" type="submit">
             <span>検　索</span>
           </button>
         </form>
@@ -78,9 +81,11 @@
     </div>
 
     <!-- item list -->
+   
     <div class="item-wrapper">
       <div class="container">
         <div class="items">
+          <div th:text="${result}"></div>
           <div th:each="item:${itemList}" class="item">
             <div class="item-icon">
               <img th:src="@{/img/} + ${item.imagePath}" />
@@ -88,17 +93,17 @@
             <a th:href="@{/ShowItemDetail/ToItemDetail?id=} + ${item.id}" th:text="${item.name}">ハワイアンパラダイス</a><br />
             <span class="price">Ｍ</span><span  th:text="${item.priceM}">1,380円(税抜)</span>円（税抜）<br />
             <span class="price">Ｌ</span><span th:text="${item.priceL}">2,380円(税抜)</span>円（税抜）<br />
+
           </div>
 		
 
-          
-        </div>
+
       </div>
     </div>
 
     <footer>
       <div class="container">
-        <img src="img/header_logo.png" />
+        <img th:src="@{/img/header_logo.png}" />
         <p>本格ピザをあなたにお届け！</p>
       </div>
     </footer>

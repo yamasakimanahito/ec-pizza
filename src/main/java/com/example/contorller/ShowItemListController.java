@@ -6,20 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Item;
 import com.example.service.ShowItemListService;
 
 /**
- * 商品の一覧情報を操作するコントローラー.
- * 
- * @author nanakono
+ * 商品を表示させるためのコントローラ
+ * @author yamasakimanahito
  *
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/showItem")
 public class ShowItemListController {
+	
 	@Autowired
 	private ShowItemListService showItemListService;
 	
@@ -29,6 +30,7 @@ public class ShowItemListController {
 	 * @param model　モデル
 	 * @return　商品一覧画面
 	 */
+	
 	@GetMapping("/showItemList")
 	public String showItemList(Model model) {
 		List<Item> itemList = showItemListService.findAll();
@@ -36,5 +38,26 @@ public class ShowItemListController {
 		return "/materialize-version/item_list";
 	}
 	
+
+	/**
+	 * 名前の一覧検索.
+	 * @param name　商品名
+	 * @param model　モデル
+	 * @return　商品一覧画面へ
+	 */
 	
+	@PostMapping("/findByName")
+	public String findByName(String name,Model model) {
+		List<Item> itemList = showItemListService.showItemList(name);
+		if(itemList.size() == 0) {
+			model.addAttribute("result", "該当するものがありません");
+			return showItemList(model);
+		} else {
+		model.addAttribute("itemList",itemList);
+		return "materialize-version/item_list" ;
+		}
+		
+	}
+
 }
+
