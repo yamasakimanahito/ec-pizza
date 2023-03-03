@@ -31,14 +31,23 @@ public class OrderItem {
 	 * @TODO 処理未
 	 */
 	public int getSubTotalPrice() {
+		int subtotalL = 0;
+		int subtotalM = 0;
+		int subtotal = 0;
 		for (OrderTopping orderToppingList : this.getOrderToppingList()) {
-			int totalL = Integer.parseInt(size) * orderToppingList.getTopping().getPriceL();
-			totalL = totalL + 2574;
-			int totalM = Integer.parseInt(size) * orderToppingList.getTopping().getPriceM();
-			totalM = totalM + 1490;
-			return totalL;
-		}
+			if (this.size.equals("L")) {
 
+				subtotalL = (this.quantity * orderToppingList.getTopping().getPriceL())
+						+ (this.quantity * (this.getOrderToppingList().size() * this.item.getPriceL()));
+				return subtotalL;
+			} else if (this.size.equals("M")) {
+				subtotalM = (this.quantity * orderToppingList.getTopping().getPriceM())
+						+ (this.quantity * (this.getOrderToppingList().size() * this.item.getPriceM()));
+				return subtotalM;
+			} else {
+			}
+
+		}
 		return 0;
 	}
 
