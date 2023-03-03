@@ -96,7 +96,7 @@ System.out.println(orderList);
 
 			if (deliveryDateTimestamp.before(after3TimeStamp)) {
 
-				result.rejectValue("deliveryDate", null, "今から3時間の日時を入力して下さい");
+				result.rejectValue("deliveryDate", null, "今から3時間後の日時を入力して下さい");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
