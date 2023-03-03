@@ -43,10 +43,8 @@ public class ShoppingCartController {
 	 * @return toCartへリダイレクト
 	 */
 	@PostMapping("/insertCart")
-	public String insertCart(@Validated ShoppingCartForm form, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			return "redirect:/ShowItemDetail/ToItemDetail";
-		}
+	public String insertCart( ShoppingCartForm form,  Model model) {
+		System.out.println(form.getQuantity());
 
 		User user = (User) session.getAttribute("User");
 		shoppingcartService.insertCat(form, 1);
@@ -100,6 +98,7 @@ public class ShoppingCartController {
 	@GetMapping("/deleteCart")
 	public String deleteCartItems(Integer orderItemId) {
 		shoppingcartService.deleteCartContents(orderItemId);
+
 		return "redirect:/shoppingCart/toCart";
 	}
 

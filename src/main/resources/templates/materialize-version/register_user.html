@@ -159,7 +159,7 @@
                   id="tel"
                   type="tel"
                 />
-                <label for="tel">電話番号</label>
+                <label for="tel">電話番号(XXXX-XXXX-XXXX)</label>
               </div>
             </div>
             <div class="error" th:errors="*{password}">
@@ -175,7 +175,7 @@
                   class="validate"
                   minlength="8"
                 />
-                <label for="password">パスワード</label>
+                <label for="password">パスワード(a-z,A-Z,記号.?/-いずれか1つをそれぞれ含めた8-16文字)</label>
               </div>
             </div>
             <div class="error" th:errors="*{confirmationPassword}">

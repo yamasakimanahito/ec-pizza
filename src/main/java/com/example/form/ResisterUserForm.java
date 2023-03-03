@@ -20,7 +20,7 @@ public class ResisterUserForm {
 	@Pattern(regexp = "^([a-zA-Z0-9])+([a-zA-Z0-9\\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\\._-]+)$", message = "メールアドレスを入力して下さい")
 	private String email;
 	/** パスワード */
-	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,16}$", message = "パスワードは8文字以上16文字以内で入力して下さい")
+	@Pattern(regexp = "^[a-zA-Z0-9.?/-]{8,16}$", message = "パスワードは8文字以上16文字以内で入力して下さい")
 	private String password;
 	/** 郵便番号 */
 	@Pattern(regexp = "^[0-9]{3}-[0-9]{4}$", message = "郵便番号はXXX-XXXXの形式で入力して下さい")
