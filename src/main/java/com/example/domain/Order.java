@@ -41,36 +41,45 @@ public class Order {
 	/** 注文商品リスト */
 	private List<OrderItem> orderItemList;
 
+
 	/**
 	 * 商品合計の消費税を取得する.
 	 * 
 	 * @return 商品合計の消費税
 	 */
-	public int getTax() {
-		List<OrderItem> orderItemList = new ArrayList<>();
-		int subTotal = 0;
-		for (OrderItem orderItem : orderItemList) {
-			subTotal += orderItem.getSubTotal();
-		}
-		int tax= subTotal/10;
-		return tax;
-	}
+
+//	public int getTax() {
+//		List<OrderItem> orderItemList = new ArrayList<>();
+//		int subTotal = 0;
+//		for (OrderItem orderItem : orderItemList) {
+//			subTotal += orderItem.getSubTotal();
+//		}
+//		int tax= subTotal/10;
+//		return tax;
+//	}
 
 	/**
 	 * カート内商品の合計金額を取得する.
 	 * 
 	 * @return カート内商品の合計金額
 	 */
-	public int getCalcTotalPrice() {
-		List<OrderItem> orderItemList = new ArrayList<>();
-		int subTotal = 0;
-		for (OrderItem orderItem : orderItemList) {
-			subTotal += orderItem.getSubTotal();
-		}
-		int tax= subTotal/10;
-		int totalPrice=subTotal+tax;
-		return totalPrice;
-	}
+	
+
+//	public int getCalcTotalPrice() {
+//		Integer totalPrice = 0;
+//
+//		if (size == "M") {
+//			for (int i = 1; i <= toppingList.size(); i++) {
+//				totalPrice += 200;
+//			}
+//			totalPrice = (totalPrice + 1490) * quantity;
+//		} else {
+//			for (int i = 1; i <= toppingList.size(); i++) {
+//				totalPrice += 300;
+//			}
+//			totalPrice = (totalPrice + 2570) * quantity;
+//		}
+//		System.out.println(totalPrice);
 
 	public Integer getId() {
 		return id;
