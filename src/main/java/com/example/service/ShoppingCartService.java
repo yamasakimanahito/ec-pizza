@@ -79,8 +79,8 @@ public class ShoppingCartService {
 		} else {
 			orderItem.setOrderId(orderObject.getId());
 		}
+		
 		OrderItem orderItemInfo = orderitemRepository.insert(orderItem);
-
 		// 注文トッピング //nullの時は何もしない
 		OrderTopping orderTopping = new OrderTopping();
 		if (form.getToppingIdList() != null) {
@@ -108,7 +108,17 @@ public class ShoppingCartService {
 	 * @return
 	 */
 	public Order showCart(Integer userId) {
-		return orderRepository.findByUserIdAndStatus(userId , 0);
+		return orderRepository.findByUserIdAndStatus(userId, 0);
 
+	}
+
+	/**
+	 * 削除.
+	 * @param orderItemId
+	 * @return
+	 */
+	public OrderItem confirmCart(Integer orderItemId) {
+		OrderItem orderItem = orderitemRepository.findByOrderId(orderItemId);
+		return orderItem;
 	}
 }
