@@ -38,13 +38,13 @@
       <div class="container">
         <div class="header">
           <div class="header-left">
-            <a href="top.html">
-              <img class="logo" src="img/header_logo.png" />
+            <a th:href="@{/showItem/showItemList}">
+              <img class="logo" th:src="@{/img/header_logo.png}" />
             </a>
           </div>
 
           <div class="header-right">
-            <a th:href="@{/showItem/showItemList}">商品一覧</a>
+            <a th:href="@{/}">商品一覧</a>
             <span sec:authorize="!isAuthenticated()"><a th:href="@{/resister}">会員登録</a></span>
             <a href="#"><i class="fas fa-shopping-cart"></i>カート</a>
             <span sec:authorize="!isAuthenticated()"><a th:href="@{/toLogin}">ログイン</a></span>
@@ -66,13 +66,14 @@
           <p>メールが届かない場合は「注文履歴」からご確認ください。</p>
         </div>
         <div class="row order-finished-btn">
+        <a th:href="@{/showItem/showItemList}">
           <button
             class="btn"
             type="button"
-            onclick="location.href='item_list.html'"
           >
             <span>トップ画面を表示する</span>
           </button>
+          </a>
         </div>
       </div>
       <!-- end container -->
@@ -80,7 +81,7 @@
     <!-- end top-wrapper -->
     <footer>
       <div class="container">
-        <img src="img/header_logo.png" />
+        <img th:src="@{/img/header_logo.png}" />
         <p>本格ピザをあなたにお届け！</p>
       </div>
     </footer>

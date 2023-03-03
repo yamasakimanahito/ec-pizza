@@ -28,8 +28,8 @@ public class ShowItemListService {
 	 * 
 	 * @return　商品情報全件リスト
 	 */
-	public List<Item> findAll(){
-		List<Item> itemList = itemRepository.findAll();
+	public List<Item> findAll(String order){
+		List<Item> itemList = itemRepository.findAll(order);
 		return itemList;
 	}
 	
@@ -38,8 +38,8 @@ public class ShowItemListService {
 	 * @param name
 	 * @return 検索された商品情報
 	 */
-	public List<Item> showItemList(String name){
-		List<Item> itemList = itemRepository.findByName(name);
+	public List<Item> showItemList(String name, String order){
+		List<Item> itemList = itemRepository.findByName(name, order);
 		return itemList;
 	}
 

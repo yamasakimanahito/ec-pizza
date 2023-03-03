@@ -1,33 +1,36 @@
 package com.example.contorller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.domain.Item;
 import com.example.domain.Order;
-import com.example.domain.OrderItem;
-import com.example.service.OrderConfirmService;
+import com.example.domain.UserInfo;
+import com.example.service.ShoppingCartService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/OrderConfirmController")
+@RequestMapping("/OrderConfirm")
 public class OrderConfirmController {
 	@Autowired
-	private OrderConfirmService orderConfirmService;
+	private HttpSession session;
+	@Autowired
+	private ShoppingCartService shoppingcartService;
 
-	@GetMapping("toOrderConfirm")
+	@PostMapping("/toOrderConfirm")
 	public String Order(Integer id, Model model) {
-		Order order = orderConfirmService.GetOrderId(id);
-		List<OrderItem> orderItemList = order.getOrderItemList();
-		for(OrderItem Item:orderItemList) {
-			model.addAttribute("Item",Item);
-		}
+		UserInfo user = (UserInfo) session.getAttribute("User");
+
+		Order orderList = shoppingcartService.showCart(id);
+
+		model.addAttribute("order", orderList);
+		model.addAttribute(user);
+		System.out.println(orderList);
+
 		return "/materialize-version/order_confirm";
 	}
 
 }
-	

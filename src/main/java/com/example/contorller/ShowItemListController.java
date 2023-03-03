@@ -14,50 +14,56 @@ import com.example.service.ShowItemListService;
 
 /**
  * 商品を表示させるためのコントローラ
+ * 
  * @author yamasakimanahito
  *
  */
 @Controller
-@RequestMapping("/showItem")
+@RequestMapping("/")
 public class ShowItemListController {
-	
+
 	@Autowired
 	private ShowItemListService showItemListService;
-	
+
 	/**
 	 * 商品一覧画面に遷移.
 	 * 
-	 * @param model　モデル
-	 * @return　商品一覧画面
+	 * @param model モデル
+	 * @return 商品一覧画面
 	 */
-	
-	@GetMapping("/showItemList")
-	public String showItemList(Model model) {
-		List<Item> itemList = showItemListService.findAll();
+
+	@GetMapping("/")
+	public String showItemList(String order, Model model) {
+		List<Item> itemList = showItemListService.findAll(order);
 		model.addAttribute("itemList", itemList);
 		return "/materialize-version/item_list";
 	}
-	
 
 	/**
 	 * 名前の一覧検索.
-	 * @param name　商品名
-	 * @param model　モデル
-	 * @return　商品一覧画面へ
+	 * 
+	 * @param name  商品名
+	 * @param model モデル
+	 * @return 商品一覧画面へ
 	 */
-	
+
 	@PostMapping("/findByName")
-	public String findByName(String name,Model model) {
-		List<Item> itemList = showItemListService.showItemList(name);
-		if(itemList.size() == 0) {
-			model.addAttribute("result", "該当するものがありません");
-			return showItemList(model);
-		} else {
-		model.addAttribute("itemList",itemList);
-		return "materialize-version/item_list" ;
+	public String findByName(String name, String order, Model model) {
+		if (name.equals("")) {
+			model.addAttribute("result", "検索結果が0件の為、全件検索します");
+			return showItemList(order, model);
 		}
-		
+
+		List<Item> itemList = showItemListService.showItemList(name, order);
+
+		if (itemList.size() == 0) {
+			model.addAttribute("result", "検索結果が0件の為、全件検索します");
+			return showItemList(order, model);
+		} else {
+			model.addAttribute("itemList", itemList);
+			return "materialize-version/item_list";
+		}
+
 	}
 
 }
-

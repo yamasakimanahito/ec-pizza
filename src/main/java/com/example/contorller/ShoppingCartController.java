@@ -3,14 +3,11 @@ package com.example.contorller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Order;
-import com.example.domain.OrderItem;
 import com.example.domain.UserInfo;
 import com.example.form.ShoppingCartForm;
 import com.example.service.ShoppingCartService;
@@ -40,18 +37,11 @@ public class ShoppingCartController {
 	 * @return toCartへリダイレクト
 	 */
 	@PostMapping("/insertCart")
-	public String insertCart(@Validated ShoppingCartForm form, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			return "redirect:/ShowItemDetail/ToItemDetail";
-		}
+	public String insertCart(ShoppingCartForm form, Model model) {
 
 		UserInfo user = (UserInfo) session.getAttribute("User");
-		shoppingcartService.insertCat(form, 1);
-		// 税金計算
-		Order order = new Order();
-		OrderItem orderItem = new OrderItem();
-//		 order.setCalcTotalPrice(form.getToppingIdList(), form.getQuantity(), form.getSize());
-//		 order.setTax(order.getCalcTotalPrice());
+		shoppingcartService.insertCat(form, user.getId());
+
 		return "redirect:/shoppingCart/toCart";
 	}
 
@@ -65,7 +55,7 @@ public class ShoppingCartController {
 
 		UserInfo user = (UserInfo) session.getAttribute("User");
 
-		Order orderList = shoppingcartService.showCart(1);
+		Order orderList = shoppingcartService.showCart(user.getId());
 
 		model.addAttribute("order", orderList);
 		System.out.println(orderList);
@@ -82,7 +72,7 @@ public class ShoppingCartController {
 	public String showCart(Model model) {
 		UserInfo user = (UserInfo) session.getAttribute("User");
 
-		Order orderList = shoppingcartService.showCart(1);
+		Order orderList = shoppingcartService.showCart(user.getId());
 
 		model.addAttribute("order", orderList);
 		return "/materialize-version/cart_list";
@@ -97,6 +87,7 @@ public class ShoppingCartController {
 	@GetMapping("/deleteCart")
 	public String deleteCartItems(Integer orderItemId) {
 		shoppingcartService.deleteCartContents(orderItemId);
+
 		return "redirect:/shoppingCart/toCart";
 	}
 

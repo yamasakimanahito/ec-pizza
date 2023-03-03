@@ -46,13 +46,14 @@
           </div>
 
           <div class="header-right">
-             <a th:href="@{/showItem/showItemList}">商品一覧</a>
+             <a th:href="@{/}">商品一覧</a>
             <span sec:authorize="!isAuthenticated()"><a th:href="@{/resister}">会員登録</a></span>
             <a href="cart_list.html">
               <i class="fas fa-shopping-cart"> </i>カート
             </a>
             <span sec:authorize="!isAuthenticated()"><a th:href="@{/toLogin}">ログイン</a></span>
            <span sec:authorize="isAuthenticated()"><a th:href="@{/logout}">ログアウト</a></span>
+
 
 
 					<a href="order_history.html">注文履歴</a>
@@ -118,7 +119,6 @@
 					<div class="item-quantity-selectbox">
 						<div class="input-field col s12">
 							<select class="browser-default" name="quantity" id="pizanum">
-								<option value="" disabled selected>選択して下さい</option>
 								<option th:value=${1}>1</option>
 								<option th:value=${2}>2</option>
 								<option th:value=${3}>3</option>

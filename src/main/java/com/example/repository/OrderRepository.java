@@ -165,17 +165,17 @@ public class OrderRepository {
 	 * @param id ID
 	 * @return 注文検索結果
 	 */
-	public Order load(Integer userId) {
+	public Order load(Integer id) {
 		String sql = "select o.id, o.user_id, o.status, o.total_price, o.order_date, o.destination_name, o.destination_email, o.destination_zipcode, o.destination_address, o.destination_tel, o.delivery_time, o.payment_method ,\n"
 				+ "oi.id as oi_id , oi.item_id as oi_item_id , oi.order_id as oi_order_id , oi.quantity as oi_quantity , oi.size as oi_size,\n"
 				+ "ot.id as ot_id , ot.topping_id as ot_topping_id,  ot.order_item_id  as ot_order_item_id, \n"
 				+ "i.id  as i_id, i.name as i_name , i.description as i_description , i.price_m as i_price_m , i.price_l as i_price_l , i.image_path as i_image_path,\n"
 				+ "t.id as t_id ,t.name as t_name , t.price_m as t_price_m , t.price_l as t_price_l\n"
-				+ "from orders o\n" + "join order_items oi on o.id = oi.order_id \n"
-				+ "join order_toppings ot on oi.id = ot.order_item_id \n" + "join items i on i.id = oi.item_id \n"
-				+ "join toppings t on t.id = ot.topping_id where o.user_id =:userId;";
+				+ "from orders o\n" + "left join order_items oi on o.id = oi.order_id \n"
+				+ "Left join order_toppings ot on oi.id = ot.order_item_id \n" + "left join items i on i.id = oi.item_id \n"
+				+ "left join toppings t on t.id = ot.topping_id where o.id =:id;";
 
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		List<Order> order = template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
 		if (order.size() == 0) {
 			return null;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/Login")
 public class LoginLogoutUserController {
 
 	/**

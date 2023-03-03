@@ -31,14 +31,35 @@ public class OrderItem {
 	 * @TODO 処理未
 	 */
 	public int getSubTotalPrice() {
-		for (OrderTopping orderToppingList : this.getOrderToppingList()) {
-			int totalL = Integer.parseInt(size) * orderToppingList.getTopping().getPriceL();
-			totalL = totalL + 2574;
-			int totalM = Integer.parseInt(size) * orderToppingList.getTopping().getPriceM();
-			totalM = totalM + 1490;
-			return totalL;
-		}
+		int subtotalL = 0;
+		int subtotalM = 0;
+		int nulltotalL = 0;
+		int nulltotalM = 0;
+			System.out.println(this.getOrderToppingList().size());
+			
+			
+			if (this.getOrderToppingList().isEmpty() && this.size.equals("L")) {
+				nulltotalL = this.quantity * this.item.getPriceL(); 
+				return nulltotalL;
+			
+		    }else if (this.size.equals("L")) {
 
+				subtotalL = (this.quantity * this.item.getPriceL())
+						+ (this.quantity * (this.getOrderToppingList().size() * 300));
+				return subtotalL;
+
+			} 
+			
+			if (this.getOrderToppingList().isEmpty() && this.size.equals("M")) {
+				nulltotalM = this.quantity * this.item.getPriceM();
+				return nulltotalM;
+			} else if(this.size.equals("M")){
+				subtotalM = (this.quantity * this.item.getPriceM())
+						+ (this.quantity * (this.getOrderToppingList().size() * 200));
+				return subtotalM;
+			}
+
+		
 		return 0;
 	}
 

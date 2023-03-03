@@ -53,8 +53,13 @@ public class ResisterUserController {
 
 	public String resisterUser(@Validated ResisterUserForm form, BindingResult result, Model model) {
 		// * パスワード確認 *//
-		if (!form.getConfirmationPassword().equals(form.getPassword())) {
-			result.rejectValue("confirmationPassword", "", "パスワードと確認用パスワードが不一致です");
+
+		if (!form.getConfirmationPassword().equals(form.getPassword()) || form.getConfirmationPassword().equals("")) {
+			if (form.getConfirmationPassword().equals("")) {
+				result.rejectValue("confirmationPassword", "", "確認用パスワードを入力してください。");
+			} else {
+				result.rejectValue("confirmationPassword", "", "パスワードと確認用パスワードが不一致です");
+			}
 		}
 
 		// * メールアドレス重複確認 *//

@@ -40,19 +40,21 @@
       <div class="container">
         <div class="header">
           <div class="header-left">
-            <a th:href="top.html">
+
+            <a th:href="@{/}">
               <img class="logo" th:src="@{/img/header_logo.png}" />
             </a>
           </div>
 
           <div class="header-right">
-             <a th:href="@{/showItem/showItemList}">商品一覧</a>
+            <a th:href="@{/}">商品一覧</a>
             <span sec:authorize="!isAuthenticated()"><a th:href="@{/resister}">会員登録</a></span>
             <a href="cart_list.html">
               <i class="fas fa-shopping-cart"> </i>カート
             </a>
            <span sec:authorize="!isAuthenticated()"><a th:href="@{/toLogin}">ログイン</a></span>
            <span sec:authorize="isAuthenticated()"><a th:href="@{/logout}">ログアウト</a></span>
+
 
             <a href="order_history.html">注文履歴</a>
           </div>
@@ -62,14 +64,24 @@
     <!-- search form -->
     <div class="search-wrapper">
       <div class="container">
-        <form th:action="@{/showItem/findByName}" method="post" class="search-form">
+      <div style="color:red;" th:text="${result}"></div>
+        <form th:action="@{/findByName}" method="post" class="search-form">
           <input type="text" name="name" class="search-name-input" />
-
+          
+          
+          <div class="order-by-price-selectbox">
+                <div class="input-field col s12">
+                  <select class="order-by-price browser-default" name="order" id="order">
+                    <option value="" selected>選択して下さい</option>
+                    <option value="high">値段が高い順</option>
+                    <option value="low">値段が低い順</option>
+                  </select>
+                </div>
+              </div>
           <button class="btn search-btn" type="submit">
             <span>検　索</span>
           </button>
         </form>
-         <div th:text="${result}"></div>
       </div>
     </div>
 
@@ -83,14 +95,15 @@
               <img th:src="@{/img/} + ${item.imagePath}" />
             </div>
             <a th:href="@{/ShowItemDetail/ToItemDetail?id=} + ${item.id}" th:text="${item.name}">ハワイアンパラダイス</a><br />
-            <span class="price">Ｍ</span><span  th:text="${item.priceM}">1,380円(税抜)</span>円（税抜）<br />
-            <span class="price">Ｌ</span><span th:text="${item.priceL}">2,380円(税抜)</span>円（税抜）<br />
+            <span class="price">Ｍ</span><span  th:text="${#numbers.formatInteger(item.priceM, 1,'COMMA')}">1,380円(税抜)</span>円（税抜）<br />
+            <span class="price">Ｌ</span><span th:text="${#numbers.formatInteger(item.priceL, 1, 'COMMA')}">2,380円(税抜)</span>円（税抜）<br />
 
           </div>
 		
 
 
-      </div>
+       </div>
+     </div>
     </div>
 
     <footer>
