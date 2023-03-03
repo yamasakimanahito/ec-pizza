@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Item;
+import com.example.form.ShoppingCartForm;
 import com.example.service.ShowItemDetailService;
 
 /**
@@ -29,7 +30,7 @@ public class ShowItemDetailController {
 	 * @return 商品詳細画面へ遷移
 	 */
 	@GetMapping("/ToItemDetail")
-	public String showItemDetail(Integer id, Model model) {
+	public String showItemDetail(Integer id, Model model, ShoppingCartForm form) {
 		Item item = showItemDetailService.showItemDetail(id);
 		model.addAttribute("Item", item);
 		return "/materialize-version/item_detail.html";
