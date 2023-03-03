@@ -16,12 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/")
 public class LoginLogoutUserController {
 
-//	@Autowired
-//	private LoginLogoutUserService loginLogoutUserService;
-
-//	@Autowired
-//	private HttpSession session;
-
 	/**
 	 * ログイン画面に遷移.
 	 * 
@@ -35,36 +29,7 @@ public class LoginLogoutUserController {
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
 		}
 		return "/materialize-version/login.html";
+
 	}
-
-//	/**
-//	 * フォームで受け取った情報でログインを行う.
-//	 * 
-//	 * @param form  フォーム
-//	 * @param model ログインできなかった場合エラーメッセージと共にログイン画面に遷移
-//	 * @return Userをセッションスコープに保存し、ShowItemControllerに遷移
-//	 */
-//	@PostMapping("/login")
-//	public String login(LoginLogoutUserForm form, Model model) {
-//		UserInfo user = loginLogoutUserService.login(form);
-//		if (user == null) {
-//
-//			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
-//			return toLogin();
-//		}
-//		session.setAttribute("User", user); // ログイン状態を保存する
-//		return "redirect:/ShowItemList/showItem";
-//	}
-
-//	/**
-//	 * ログアウトを行う.
-//	 * 
-//	 * @return ログイン画面
-//	 */
-//	@GetMapping("/logout")
-//	public String logout() {
-//		session.invalidate();
-//		return "redirect:/LoginLogoutUser/toLogin";
-//	}
 
 }

@@ -18,38 +18,28 @@ public class OrderItem {
 	/** 数量 */
 	private Integer quantity;
 	/** 商品サイズ */
-	private Character size;
+	private String size;
 	/** 商品 */
 	private Item item;
 	/** 注文トッピングリスト */
 	private List<OrderTopping> orderToppingList;
 
 	/**
-	 * 1商品に対する小計を取得する.
+	 * カート内商品の小計金額を取得する.
 	 * 
-	 * @return 小計金額
-	 * @HACK 動作確認未 似たような処理が多い
+	 * @return カート内商品の合計金額
+	 * @TODO 処理未
 	 */
-	public int getSubTotal() {
-// (商品(M or L) + (トッピング(M or L(商品と連動)) * トッピング数)) * 数量 
-		int toppingResult = 0;
-
-		if (this.size == 'M') {
-			for (OrderTopping orderTopping : orderToppingList) {
-				toppingResult += orderTopping.getTopping().getPriceM();
-			}
-			int itemPrice = ((item.getPriceM() + toppingResult) * this.quantity);
-			return itemPrice;
-		} else if (this.size == 'L') {
-			for (OrderTopping orderTopping : orderToppingList) {
-				toppingResult += orderTopping.getTopping().getPriceL();
-			}
-			int itemPrice = ((item.getPriceL() + toppingResult) * this.quantity);
-			return itemPrice;
-		} else {
-			return 0;
+	public int getSubTotalPrice() {
+		for (OrderTopping orderToppingList : this.getOrderToppingList()) {
+			int totalL = Integer.parseInt(size) * orderToppingList.getTopping().getPriceL();
+			totalL = totalL + 2574;
+			int totalM = Integer.parseInt(size) * orderToppingList.getTopping().getPriceM();
+			totalM = totalM + 1490;
+			return totalL;
 		}
 
+		return 0;
 	}
 
 	public Integer getId() {
@@ -84,11 +74,11 @@ public class OrderItem {
 		this.quantity = quantity;
 	}
 
-	public Character getSize() {
+	public String getSize() {
 		return size;
 	}
 
-	public void setSize(Character size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 
