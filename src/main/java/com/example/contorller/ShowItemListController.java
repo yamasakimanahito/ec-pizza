@@ -18,7 +18,7 @@ import com.example.service.ShowItemListService;
  *
  */
 @Controller
-@RequestMapping("/showItem")
+@RequestMapping("")
 public class ShowItemListController {
 	
 	@Autowired
@@ -31,9 +31,9 @@ public class ShowItemListController {
 	 * @return　商品一覧画面
 	 */
 	
-	@GetMapping("/showItemList")
-	public String showItemList(Model model) {
-		List<Item> itemList = showItemListService.findAll();
+	@GetMapping("")
+	public String showItemList(String order, Model model) {
+		List<Item> itemList = showItemListService.findAll(order);
 		model.addAttribute("itemList", itemList);
 		return "/materialize-version/item_list";
 	}
@@ -47,11 +47,17 @@ public class ShowItemListController {
 	 */
 	
 	@PostMapping("/findByName")
-	public String findByName(String name,Model model) {
-		List<Item> itemList = showItemListService.showItemList(name);
+	public String findByName(String name, String order, Model model) {
+		if(name.equals("")){
+			model.addAttribute("result", "検索結果が0件の為、全件検索します");
+			return showItemList(order,model);
+		}
+		
+		List<Item> itemList = showItemListService.showItemList(name, order);
+		
 		if(itemList.size() == 0) {
-			model.addAttribute("result", "該当するものがありません");
-			return showItemList(model);
+			model.addAttribute("result", "検索結果が0件の為、全件検索します");
+			return showItemList(order, model);
 		} else {
 		model.addAttribute("itemList",itemList);
 		return "materialize-version/item_list" ;
