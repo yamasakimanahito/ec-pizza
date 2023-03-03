@@ -1,7 +1,5 @@
 package com.example.contorller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.domain.Item;
 import com.example.domain.Order;
 import com.example.domain.OrderItem;
-import com.example.domain.User;
+import com.example.domain.UserInfo;
 import com.example.form.ShoppingCartForm;
 import com.example.service.ShoppingCartService;
 
@@ -48,7 +45,7 @@ public class ShoppingCartController {
 			return "redirect:/ShowItemDetail/ToItemDetail";
 		}
 
-		User user = (User) session.getAttribute("User");
+		UserInfo user = (UserInfo) session.getAttribute("User");
 		shoppingcartService.insertCat(form, 1);
 		// 税金計算
 		Order order = new Order();
@@ -66,7 +63,7 @@ public class ShoppingCartController {
 	@GetMapping("/toCart")
 	public String toCartList(Model model) {
 
-		User user = (User) session.getAttribute("User");
+		UserInfo user = (UserInfo) session.getAttribute("User");
 
 		Order orderList = shoppingcartService.showCart(1);
 
@@ -83,7 +80,7 @@ public class ShoppingCartController {
 	 */
 	@GetMapping("/showCart")
 	public String showCart(Model model) {
-		User user = (User) session.getAttribute("User");
+		UserInfo user = (UserInfo) session.getAttribute("User");
 
 		Order orderList = shoppingcartService.showCart(1);
 
