@@ -2,7 +2,6 @@ package com.example.service;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 
 import org.checkerframework.checker.units.qual.Temperature;
@@ -15,6 +14,7 @@ import com.example.repository.OrderRepository;
 
 /**
  * 注文手順を操作するサービスクラス.
+ * 
  * @author yamasakimanahito
  *
  */
@@ -26,8 +26,9 @@ public class OrderService {
 
 	/**
 	 * 注文情報を受け取り、利用者の登録を行います.
+	 * 
 	 * @param form オーダーフォーム
-	 * @return　注文情報
+	 * @return 注文情報
 	 */
 	public Order order(OrderForm form) {
 		Order order = orderRepository.load(Integer.parseInt(form.getId()));
@@ -38,27 +39,20 @@ public class OrderService {
 		order.setDestinationAddress(form.getDestinationAddress());
 		order.setDestinationTel(form.getDestinationTel());
 		order.setPaymentMethod(form.getPaymentMethod());
-		
+
 		try {
 			final String yyyyMMddhh = form.getDeliveryDate() + "-" + form.getDeliveryTime();
 			System.out.println("yyyyMMddhh:" + yyyyMMddhh);
-			Date deliveryTime = new SimpleDateFormat("yyyy-MM-dd-hh")
-					.parse(yyyyMMddhh);
+			Date deliveryTime = new SimpleDateFormat("yyyy-MM-dd-hh").parse(yyyyMMddhh);
 			Timestamp deliveryDateTimestamp = new Timestamp(deliveryTime.getTime());
 			order.setDeliveryTime(deliveryDateTimestamp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		
-		
+
 		orderRepository.update(order);
-		
+
 		return order;
 	}
-
-	
-
-
-	
 
 }
