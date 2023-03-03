@@ -5,7 +5,7 @@
  'use strict';
  
  $(function(){
-	 $('.btn').on('click',function(){
+	 $('#search').on('click',function(){
 		 $.ajax({
 			 url: 'https://zipcoda.net/api',
 			 type: 'GET',
