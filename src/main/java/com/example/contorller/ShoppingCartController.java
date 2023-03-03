@@ -44,15 +44,10 @@ public class ShoppingCartController {
 	 */
 	@PostMapping("/insertCart")
 	public String insertCart( ShoppingCartForm form,  Model model) {
-		System.out.println(form.getQuantity());
 
 		User user = (User) session.getAttribute("User");
-		shoppingcartService.insertCat(form, 1);
-		// 税金計算
-		Order order = new Order();
-		OrderItem orderItem = new OrderItem();
-//		 order.setCalcTotalPrice(form.getToppingIdList(), form.getQuantity(), form.getSize());
-//		 order.setTax(order.getCalcTotalPrice());
+		shoppingcartService.insertCat(form, user.getId());
+	
 		return "redirect:/shoppingCart/toCart";
 	}
 
@@ -66,7 +61,7 @@ public class ShoppingCartController {
 
 		User user = (User) session.getAttribute("User");
 
-		Order orderList = shoppingcartService.showCart(1);
+		Order orderList = shoppingcartService.showCart(user.getId());
 
 		model.addAttribute("order", orderList);
 		System.out.println(orderList);
@@ -83,7 +78,7 @@ public class ShoppingCartController {
 	public String showCart(Model model) {
 		User user = (User) session.getAttribute("User");
 
-		Order orderList = shoppingcartService.showCart(1);
+		Order orderList = shoppingcartService.showCart(user.getId());
 
 		model.addAttribute("order", orderList);
 		return "/materialize-version/cart_list";
