@@ -33,7 +33,7 @@ public class OrderToppingRepository {
 	 * @param employee 従業員情報
 	 * @return インサートした従業員情報
 	 */
-	synchronized public void insert(OrderTopping orderTopping) {
+	synchronized public OrderTopping  insert(OrderTopping orderTopping) {
 
 		SqlParameterSource param = new BeanPropertySqlParameterSource(orderTopping);
 
@@ -41,7 +41,7 @@ public class OrderToppingRepository {
 		String insertSql = "INSERT INTO order_toppings(topping_id,order_item_id) "
 				+ " VALUES(:toppingId,:orderItemId)";
 		template.update(insertSql, param);
-
+return orderTopping;
 	}
 
 }

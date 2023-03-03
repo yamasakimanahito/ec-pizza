@@ -24,7 +24,23 @@ public class OrderItem {
 	/** 注文トッピングリスト */
 	private List<OrderTopping> orderToppingList;
 
-	
+	/**
+	 * カート内商品の小計金額を取得する.
+	 * 
+	 * @return カート内商品の合計金額
+	 * @TODO 処理未
+	 */
+	public int getSubTotalPrice() {
+		for (OrderTopping orderToppingList : this.getOrderToppingList()) {
+			int totalL = Integer.parseInt(size) * orderToppingList.getTopping().getPriceL();
+			totalL = totalL + 2574;
+			int totalM = Integer.parseInt(size) * orderToppingList.getTopping().getPriceM();
+			totalM = totalM + 1490;
+			return totalL;
+		}
+
+		return 0;
+	}
 
 	public Integer getId() {
 		return id;
@@ -88,5 +104,4 @@ public class OrderItem {
 				+ ", size=" + size + ", item=" + item + ", orderToppingList=" + orderToppingList + "]";
 	}
 
-	
 }

@@ -42,7 +42,8 @@
 
 				<div class="header-right">
 					<a href="item_list.html">商品一覧</a> <a href="register_admin.html">会員登録</a>
-					<a href="#"><i class="fas fa-shopping-cart"></i>カート</a>
+					<a th:href="@{/shoppingCart/showCart}"><i
+						class="fas fa-shopping-cart"></i>カート</a>
 					<div th:unless="${session.User}">
 						<a th:href="@{/LoginLogoutUser/toLogin}" class="login"> <i
 							class="fas fa-sign-in-alt"></i>ログイン
@@ -81,38 +82,48 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each=" orderItem : ${orderItemList}">
-							<th:block th:each=" item : ${orderItem.item}">
+							<tr th:each=" orderItemList : ${order.orderItemList}">
+								<th:block>
+									<th:block th:each=" item : ${orderItemList.item}">
 
-								<td class="cart-item-name">
-									<div class="cart-item-icon"></div> <img
-									th:src="@{/img/{image} (image=${item.imagePath})}" /> <span
-									th:text="${item.name}"></span>
-								</td>
-								<td><span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円
-									&nbsp;&nbsp;1個</td>
-								<td th:each="topping : ${orderItem.OrderToppingList}"><th:block
-										th:each=" topping : ${topping.topping}">
+										<td class="cart-item-name">
+											<div class="cart-item-icon">
+												<img th:src="@{/img/{image} (image=${item.imagePath})}" />
+												<th:block th:text="${item.name}"></th:block>
+											</div>
+										</td>
+										<td><span th:if="${orderItemList.size == 'L'}"> <span>
+													L</span> 2,574円 <th:block th:text="${orderItemList.quantity}"></th:block>個
+										</span> <span th:if="${orderItemList.size == 'M'}"><span>M</span>
+												1,490円 <th:block th:text="${orderItemList.quantity}"></th:block>個</span>
+										</td>
+										<td>
 
-										<ul>
-											<li th:text="${topping.name}">ピーマン300円
-								<th:block th:text="${topping.priceM}">円</th:block>
-								<th:block th:text="${topping.priceL}">円</th:block>
-								</li>
-										</ul></th:block></td>
-								<td>
-								<td><div class="text-center">3,280円</div></td>
-								<td>
-								<a
-									th:href="@{/shoppingCart/deleteCart?orderItemId=} + ${orderItem.id}">
-									<button class="btn" type="submit">
-										<span>削除</span>
 
-									</button></a>
-								</td>
-							</th:block>
-						</tr>
+											<ul
+												th:each=" ordertopping : ${orderItemList.OrderToppingList}">
 
+
+												<li th:each=" topping : ${ordertopping.topping}"><th:block
+														th:text="${topping.name}"></th:block> <span
+													th:if="${orderItemList.size == 'M'}"
+													th:text="${topping.priceM}"></span> <span
+													th:if="${orderItemList.size == 'L'}"
+													th:text="${topping.priceL}"></span> 円</li>
+											</ul>
+										</td>
+										<td>
+										</td>
+										<td><a
+											th:href="@{/shoppingCart/deleteCart?orderItemId=} + ${orderItemList.id}">
+												<button class="btn" type="submit">
+													<span>削除</span>
+
+												</button>
+										</a></td>
+									</th:block>
+								</th:block>
+							</tr>
 					</tbody>
 
 				</table>
@@ -122,9 +133,11 @@
 	</div>
 
 	<div class="row cart-total-price">
-		<div>消費税：8,000円</div>
-		<div>ご注文金額合計：38,000円 (税込)</div>
-	</div>
+	
+			消費税：<span th:text="${#numbers.formatInteger(order.tax, 1, 'COMMA')}">消費税：8,000円</span>円
+			<br> ご注文金額合計 (税込) <span
+				th:text="${#numbers.formatInteger(order.calcTotalPrice, 1, 'COMMA')} "></span>円
+		</div>
 	<div class="row order-confirm-btn">
 		<button class="btn" type="button"
 			onclick="location.href='order_confirm.html'">

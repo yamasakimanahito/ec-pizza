@@ -40,12 +40,14 @@ public class Order {
 	/** 注文商品リスト */
 	private List<OrderItem> orderItemList;
 
+
 	/**
 	 * 商品合計の消費税を取得する.
 	 * 
 	 * @return 商品合計の消費税
 	 * @TODO 処理未
 	 */
+
 	public int getTax() {
 		return 0;
 	}
@@ -56,8 +58,24 @@ public class Order {
 	 * @return カート内商品の合計金額
 	 * @TODO 処理未
 	 */
+	
+
 	public int getCalcTotalPrice() {
-		return 0;
+//		Integer totalPrice = 0;
+//
+//		if (size == "M") {
+//			for (int i = 1; i <= toppingList.size(); i++) {
+//				totalPrice += 200;
+//			}
+//			totalPrice = (totalPrice + 1490) * quantity;
+//		} else {
+//			for (int i = 1; i <= toppingList.size(); i++) {
+//				totalPrice += 300;
+//			}
+//			totalPrice = (totalPrice + 2570) * quantity;
+//		}
+//		System.out.println(totalPrice);
+		return totalPrice;
 	}
 
 	public Integer getId() {

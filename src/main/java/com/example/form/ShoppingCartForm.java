@@ -2,6 +2,8 @@ package com.example.form;
 
 import java.util.List;
 
+import jakarta.validation.constraints.NotNull;
+
 /**
  * ショッピングカート関連フォーム.
  * 
@@ -18,6 +20,7 @@ public class ShoppingCartForm {
 	/**
 	 * 数量
 	 */
+	@NotNull(message="数量を入力してください")
 	private Integer quantity;
 
 	/**
