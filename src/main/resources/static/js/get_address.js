@@ -6,7 +6,6 @@
  
  $(function(){
 	 $('.btn').on('click',function(){
-		 console.log('click')
 		 $.ajax({
 			 url: 'https://zipcoda.net/api',
 			 type: 'GET',
