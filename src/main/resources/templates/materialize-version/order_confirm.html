@@ -46,7 +46,7 @@
           <div class="header-right">
             <a th:href="@{/showItem/showItemList}">商品一覧</a>
             <a th:href="@{/resister}">会員登録</a>
-            <a href="#"><i class="fas fa-shopping-cart"></i>カート</a>
+            <a th:href="@{/shoppingCart/showCart}"><i class="fas fa-shopping-cart"></i>カート</a>
             <div th:unless="${session.User}">
               <a th:href="@{/LoginLogoutUser/toLogin}" class="login">
                 <i class="fas fa-sign-in-alt"></i>ログイン
@@ -113,6 +113,7 @@
 											</ul>
 										</td>
 										<td>
+										<span th:text="${#numbers.formatInteger(orderItemList.subTotalPrice, 1, 'COMMA')}"></span>円
 										</td>
 										
 									</th:block>
@@ -127,8 +128,9 @@
 	</div>
 
         <div class="row cart-total-price">
-          <div>消費税：8,000円</div>
-          <div>ご注文金額合計：38,000円 (税込)</div>
+          消費税：<span th:text="${#numbers.formatInteger(order.tax, 1, 'COMMA')}">消費税：8,000円</span>円  
+			<br> ご注文金額合計 (税込) 
+		<span th:text="${#numbers.formatInteger(order.calcTotalPrice, 1, 'COMMA')} "></span>円  
         </div>
        <form th:action="@{/orderCon/order}" method="post" th:object="${orderForm}">
         <h2 class="page-title">お届け先情報</h2>
@@ -152,7 +154,7 @@
              <div th:errors="*{destinationZipcode}" style="color:red"></div>
             <div class="input-field">
               <input id="zipcode"name="destinationZipcode"  type="text" maxlength="8" th:field="*{destinationZipcode}"/>
-              <label for="zipcode">郵便番号</label>
+              <label for="zipcode">郵便番号(XXX-XXXX)</label>
               <button class="btn" type="button" id="get_address_btn">
                 <span>住所検索</span>
               </button>
@@ -170,7 +172,7 @@
             <div th:errors="*{destinationTel}" style="color:red"></div>
             <div class="input-field">
               <input id="tel" name="destinationTel" type="tel" th:field="*{destinationTel}" />
-              <label for="tel">電話番号</label>
+              <label for="tel">電話番号(XXXX-XXXX-XXXX)</label>
             </div>
           </div>
           <div class="row order-confirm-delivery-datetime">
