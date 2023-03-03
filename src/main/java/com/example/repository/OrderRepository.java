@@ -5,7 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -24,6 +26,14 @@ import com.example.domain.Topping;
  * 注文関連レポジトリー.
  * 
  * @author matsumotoyuyya
+=======
+import org.springframework.stereotype.Repository;
+
+import com.example.domain.Order;
+/**
+ * Orderドメインのリポジトリー.
+ * @author yamasakimanahito
+>>>>>>> develop
  *
  */
 @Repository
@@ -131,6 +141,8 @@ public class OrderRepository {
 			order.setId(keyHolder.getKey().intValue());
 			System.out.println(keyHolder.getKey() + "が割り当てられました");
 		}
+
+		
 		return order;
 	}
 	
@@ -153,7 +165,7 @@ public class OrderRepository {
 	 * @param id ID
 	 * @return 注文検索結果
 	 */
-	public List<Order> load(Integer userId) {
+	public Order load(Integer userId) {
 		String sql = "select o.id, o.user_id, o.status, o.total_price, o.order_date, o.destination_name, o.destination_email, o.destination_zipcode, o.destination_address, o.destination_tel, o.delivery_time, o.payment_method ,\n"
 				+ "oi.id as oi_id , oi.item_id as oi_item_id , oi.order_id as oi_order_id , oi.quantity as oi_quantity , oi.size as oi_size,\n"
 				+ "ot.id as ot_id , ot.topping_id as ot_topping_id,  ot.order_item_id  as ot_order_item_id, \n"
@@ -168,7 +180,7 @@ public class OrderRepository {
 		if (order.size() == 0) {
 			return null;
 		}
-		return order;
+		return order.get(0);
 	}
 
 	/**
@@ -195,5 +207,6 @@ public class OrderRepository {
 		}
 		return orderList.get(0);
 	}
+
 
 }

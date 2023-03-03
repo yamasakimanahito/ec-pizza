@@ -1,6 +1,7 @@
 package com.example.contorller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,8 +14,6 @@ import com.example.domain.User;
 import com.example.form.ResisterUserForm;
 import com.example.service.ResisterUserService;
 
-
-
 /**
  * ユーザー情報を操作するコントローラー.
  * 
@@ -24,50 +23,51 @@ import com.example.service.ResisterUserService;
 @Controller
 @RequestMapping("/")
 public class ResisterUserController {
-	
+
 	@Autowired
 	private ResisterUserService resisterUserService;
-	
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
 	 * 
 	 * @param form フォーム
-	 * @return　ユーザー登録画面
+	 * @return ユーザー登録画面
 	 */
 	@GetMapping("/resister")
 	public String resister(ResisterUserForm form) {
 		return "/materialize-version/register_user";
 	};
-	
+
 	/**
 	 * ユーザー情報を登録します.
 	 * 
-	 * @param form ユーザー情報用フォーム
+	 * @param form   ユーザー情報用フォーム
 	 * @param result
-	 * @param model モデル
+	 * @param model  モデル
 	 * @return ログイン画面
 	 */
 	@PostMapping("/resisterUser")
-	
-	public String resisterUser(@Validated ResisterUserForm form, BindingResult result,  Model model) {
-		//* パスワード確認 *//
-		if(!form.getConfirmationPassword().equals(form.getPassword())) {
+
+	public String resisterUser(@Validated ResisterUserForm form, BindingResult result, Model model) {
+		// * パスワード確認 *//
+		if (!form.getConfirmationPassword().equals(form.getPassword())) {
 			result.rejectValue("confirmationPassword", "", "パスワードと確認用パスワードが不一致です");
 		}
-		
-		//*　メールアドレス重複確認 *//
+
+		// * メールアドレス重複確認 *//
 		User existUser = resisterUserService.findByEmail(form.getEmail());
-		if(existUser != null) {
+		if (existUser != null) {
 			result.rejectValue("email", "", "そのメールアドレスはすでに使われています");
-		} 
-		
-		
-		if(result.hasErrors()) {
+		}
+
+		if (result.hasErrors()) {
 			return resister(form);
 		}
-		
-		
-		//* ユーザー情報登録 *//
+		form.setPassword(passwordEncoder.encode(form.getPassword()));
+		// * ユーザー情報登録 *//
 		User user = new User();
 		user.setName(form.getName());
 		user.setEmail(form.getEmail());
@@ -79,7 +79,5 @@ public class ResisterUserController {
 		resisterUserService.resisterUser(user);
 		return "redirect:/LoginLogoutUser/toLogin";
 	}
-	
-	
-	
+
 }

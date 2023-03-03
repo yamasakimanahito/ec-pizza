@@ -55,7 +55,7 @@ public class LoginLogoutUserController {
 			return toLogin();
 		}
 		session.setAttribute("User", user); // ログイン状態を保存する
-		return "redirect:/ShowItemList/showItem";
+		return "redirect:/showItem/showItemList";
 	}
 
 	/**
