@@ -45,7 +45,7 @@ public class Order {
 	 * 商品合計の消費税を取得する.
 	 * 
 	 * @return 商品合計の消費税
-	 * @TODO 処理未
+	 * @TODO 
 	 */
 	public int getTax() {
 		List<OrderItem> orderItemList = new ArrayList<>();
@@ -61,7 +61,7 @@ public class Order {
 	 * カート内商品の合計金額を取得する.
 	 * 
 	 * @return カート内商品の合計金額
-	 * @TODO 処理未
+	 * @TODO
 	 */
 	public int getCalcTotalPrice() {
 		List<OrderItem> orderItemList = new ArrayList<>();

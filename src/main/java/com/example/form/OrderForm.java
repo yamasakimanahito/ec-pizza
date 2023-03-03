@@ -40,7 +40,8 @@ public class OrderForm {
 	@Pattern(regexp = "^[0-9]{4}-[0-9]{4}-[0-9]{4}$", message = "電話番号はXXXX-XXXX-XXXXの形式で入力して下さい")
 	private String destinationTel;
 	/** 配達日 */
-	private Date deliveryDate;
+	@NotBlank(message="配達日を入力して下さい")
+	private String deliveryDate;
 	/**配達時間*/
 	@NotNull(message ="配達時間を入力してください")
 	private Integer deliveryTime;
@@ -119,20 +120,20 @@ public class OrderForm {
 		this.id = id;
 	}
 
-	public Date getDeliveryDate() {
-		return deliveryDate;
-	}
-
-	public void setDeliveryDate(Date deliveryDate) {
-		this.deliveryDate = deliveryDate;
-	}
-
 	public Integer getDeliveryTime() {
 		return deliveryTime;
 	}
 
 	public void setDeliveryTime(Integer deliveryTime) {
 		this.deliveryTime = deliveryTime;
+	}
+
+	public String getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(String deliveryDate) {
+		this.deliveryDate = deliveryDate;
 	}
 
 	@Override

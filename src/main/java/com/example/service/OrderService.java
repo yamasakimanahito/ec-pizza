@@ -1,8 +1,9 @@
 package com.example.service;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.Month;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 
 import org.checkerframework.checker.units.qual.Temperature;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +39,17 @@ public class OrderService {
 		order.setDestinationTel(form.getDestinationTel());
 		order.setPaymentMethod(form.getPaymentMethod());
 		
-		int year=form.getDeliveryDate().toLocalDate().getYear();
-		int month=form.getDeliveryDate().toLocalDate().getMonthValue();
-		int day=form.getDeliveryDate().toLocalDate().getDayOfMonth();
-		
-		LocalDateTime localDateTime = LocalDateTime.of(year,month,day,form.getDeliveryTime(),0);
-		order.setDeliveryTime(Timestamp.valueOf(localDateTime));
+		try {
+			final String yyyyMMddhh = form.getDeliveryDate() + "-" + form.getDeliveryTime();
+			System.out.println("yyyyMMddhh:" + yyyyMMddhh);
+			Date deliveryTime = new SimpleDateFormat("yyyy-MM-dd-hh")
+					.parse(yyyyMMddhh);
+			Timestamp deliveryDateTimestamp = new Timestamp(deliveryTime.getTime());
+			order.setDeliveryTime(deliveryDateTimestamp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+//		
 		
 		orderRepository.update(order);
 		
