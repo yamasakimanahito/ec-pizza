@@ -51,7 +51,11 @@ public class ItemRepository {
 	 */
 	public List<Item> findAll(String order) {
 		if ("high".equals(order)) {
-			String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY id DESC;";
+			String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY price_m DESC;";
+			List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
+			return itemList;
+		} else if("low".equals(order)) {
+			String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY price_m;";
 			List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 			return itemList;
 		} else {
@@ -79,7 +83,7 @@ public class ItemRepository {
 			List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 			return itemList;
 		} else {
-			String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name ilike :name;";
+			String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name ilike :name ORDER BY id;";
 			SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 			List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 			return itemList;
