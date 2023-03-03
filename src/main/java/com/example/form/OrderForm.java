@@ -1,14 +1,10 @@
 package com.example.form;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.List;
-
-import com.example.domain.OrderItem;
-import com.example.domain.UserInfo;
+import java.util.Date;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 /**
@@ -18,6 +14,8 @@ import jakarta.validation.constraints.Pattern;
  *
  */
 public class OrderForm {
+	/** id */
+	private String id;
 	/** 注文状態 */
 	private Integer status;
 	/** 合計金額 */
@@ -26,23 +24,22 @@ public class OrderForm {
 	@NotBlank(message = "名前を入力して下さい")
 	private String destinationName;
 	/** 宛先Eメール */
-	@NotBlank(message = "メールアドレスを入力して下さい")
 	@Email(message = "メールアドレスの形式が不正です")
 	private String destinationEmail;
 	/** 宛先郵便番号 */
-	@NotBlank(message = "郵便番号を入力して下さい")
 	@Pattern(regexp = "^[0-9]{3}-[0-9]{4}$", message = "郵便番号形式にしてください")
 	private String destinationZipcode;
 	/** 宛先住所 */
 	@NotBlank(message = "住所を入力して下さい")
 	private String destinationAddress;
 	/** 宛先電話番号 */
-	@NotBlank(message = "電話番号を入力して下さい")
 	@Pattern(regexp = "^[0-9]{4}-[0-9]{4}-[0-9]{4}$", message = "電話番号はXXXX-XXXX-XXXXの形式で入力して下さい")
 	private String destinationTel;
+	/** 配達日 */
+	private Date deliveryDate;
 	/** 配達時間 */
-	@NotBlank(message = "配達日時を入力して下さい")
-	private Timestamp deliveryTime;
+	@NotNull(message = "配達時間を入力してください")
+	private Integer deliveryTime;
 	/** 支払い方法 */
 	private Integer paymentMethod;
 
@@ -102,14 +99,6 @@ public class OrderForm {
 		this.destinationTel = destinationTel;
 	}
 
-	public Timestamp getDeliveryTime() {
-		return deliveryTime;
-	}
-
-	public void setDeliveryTime(Timestamp deliveryTime) {
-		this.deliveryTime = deliveryTime;
-	}
-
 	public Integer getPaymentMethod() {
 		return paymentMethod;
 	}
@@ -118,12 +107,37 @@ public class OrderForm {
 		this.paymentMethod = paymentMethod;
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public Integer getDeliveryTime() {
+		return deliveryTime;
+	}
+
+	public void setDeliveryTime(Integer deliveryTime) {
+		this.deliveryTime = deliveryTime;
+	}
+
 	@Override
 	public String toString() {
-		return "OrderForm [status=" + status + ", totalPrice=" + totalPrice + ", destinationName=" + destinationName
-				+ ", destinationEmail=" + destinationEmail + ", destinationZipcode=" + destinationZipcode
-				+ ", destinationAddress=" + destinationAddress + ", destinationTel=" + destinationTel
-				+ ", deliveryTime=" + deliveryTime + ", paymentMethod=" + paymentMethod + "]";
+		return "OrderForm [id=" + id + ", status=" + status + ", totalPrice=" + totalPrice + ", destinationName="
+				+ destinationName + ", destinationEmail=" + destinationEmail + ", destinationZipcode="
+				+ destinationZipcode + ", destinationAddress=" + destinationAddress + ", destinationTel="
+				+ destinationTel + ", deliveryDate=" + deliveryDate + ", delivaryTime=" + deliveryTime
+				+ ", paymentMethod=" + paymentMethod + "]";
 	}
 
 }

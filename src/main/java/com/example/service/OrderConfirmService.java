@@ -14,7 +14,7 @@ public class OrderConfirmService {
 	private OrderRepository orderRepository;
 	
 	
-	public Order GetOrderId(String id) {
+	public Order GetOrderId(Integer id) {
 		Order order = orderRepository.load(id);
 		return order;
 	}

@@ -40,14 +40,14 @@
       <div class="container">
         <div class="header">
           <div class="header-left">
-            <a href="top.html">
+            <a th:href="top.html">
               <img class="logo" th:src="@{/img/header_logo.png}" />
             </a>
           </div>
 
           <div class="header-right">
-            <a href="item_list.html">商品一覧</a>
-            <a href="register_admin.html">会員登録</a>
+             <a th:href="@{/showItem/showItemList}">商品一覧</a>
+            <span sec:authorize="!isAuthenticated()"><a th:href="@{/resister}">会員登録</a></span>
             <a href="cart_list.html">
               <i class="fas fa-shopping-cart"> </i>カート
             </a>
@@ -69,6 +69,7 @@
             <span>検　索</span>
           </button>
         </form>
+         <div th:text="${result}"></div>
       </div>
     </div>
 
@@ -77,20 +78,18 @@
     <div class="item-wrapper">
       <div class="container">
         <div class="items">
-          <div class="item">
-           <div class="item-icon">
-           
-             
+          <div th:each="item:${itemList}" class="item">
+            <div class="item-icon">
+              <img th:src="@{/img/} + ${item.imagePath}" />
             </div>
-             <span th:each="item:${itemList}">
-              <img th:src="@{/img/{image} (image=${item.imagePath})}" />
-            <a th:href="item_detail.html"><span th:text="${item.name}"></span></a><br />
-            <span class="price">Ｍ</span><span th:text="${item.priceM}"></span><br />
-            <span class="price">Ｌ</span><span th:text="${item.priceL}"></span><br />
-            </span>
-          </div>
+            <a th:href="@{/ShowItemDetail/ToItemDetail?id=} + ${item.id}" th:text="${item.name}">ハワイアンパラダイス</a><br />
+            <span class="price">Ｍ</span><span  th:text="${item.priceM}">1,380円(税抜)</span>円（税抜）<br />
+            <span class="price">Ｌ</span><span th:text="${item.priceL}">2,380円(税抜)</span>円（税抜）<br />
 
           </div>
+		
+
+
       </div>
     </div>
 
