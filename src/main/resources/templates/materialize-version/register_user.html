@@ -88,7 +88,7 @@
                   type="text"
                   class="validate"
                 />
-                <label for="last_name">姓</label>
+                <label for="last_name">姓(山田)</label>
               </div>
               <div class="input-field col s6">
                 <input
@@ -98,7 +98,7 @@
                   type="text"
                   class="validate"
                 />
-                <label for="first_name">名</label>
+                <label for="first_name">名(太郎)</label>
               </div>
             </div>
             <div class="error" th:errors="*{email}">
@@ -113,7 +113,7 @@
                   type="email"
                   class="validate"
                 />
-                <label for="email">メールアドレス</label>
+                <label for="email">メールアドレス(xxx@xxx.com)</label>
               </div>
             </div>
             <div class="error" th:errors="*{zipcode}">
@@ -128,7 +128,7 @@
                   type="text"
                   maxlength="8"
                 />
-                <label for="zipcode">郵便番号</label>
+                <label for="zipcode">郵便番号(012-3456)</label>
                 <span class="input-group-btn">
                   <button id="search" type="button" class="btn btn-primary">
                     住所検索
@@ -163,7 +163,7 @@
               </div>
             </div>
             <div class="error" th:errors="*{password}">
-              パスワードは８文字以上１６文字以内で設定してください
+              パスワードは小文字・大文字・記号を含めた８文字以上１６文字以内で設定してください
             </div>
             <div class="row">
               <div class="input-field col s12">
