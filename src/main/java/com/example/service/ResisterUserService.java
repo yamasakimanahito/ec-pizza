@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.domain.User;
+import com.example.domain.UserInfo;
 import com.example.repository.UserRepository;
 
 /**
@@ -25,12 +25,15 @@ public class ResisterUserService {
 	 * 
 	 * @param user ユーザー情報
 	 */
-	public void resisterUser(User user) {
+
+	public void resisterUser(UserInfo user) {
+		System.out.println("userの中身:" + user);
+
 		userRepository.save(user);
 	}
 
-	public User findByEmail(String email) {
-		User user = userRepository.findByEmail(email);
+	public UserInfo findByEmail(String email) {
+		UserInfo user = userRepository.findByEmail(email);
 		return user;
 
 	}

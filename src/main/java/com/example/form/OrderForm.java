@@ -1,10 +1,5 @@
 package com.example.form;
 
-
-import java.sql.Date;
-
-
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +12,7 @@ import jakarta.validation.constraints.Pattern;
  *
  */
 public class OrderForm {
-	/**id */
+	/** id */
 	private String id;
 	/** 注文状態 */
 	private Integer status;
@@ -39,14 +34,15 @@ public class OrderForm {
 	@Pattern(regexp = "^[0-9]{4}-[0-9]{4}-[0-9]{4}$", message = "電話番号はXXXX-XXXX-XXXXの形式で入力して下さい")
 	private String destinationTel;
 	/** 配達日 */
-	@NotBlank(message="配達日を入力して下さい")
+
+	@NotBlank(message = "配達日を入力して下さい")
 	private String deliveryDate;
-	/**配達時間*/
-	@NotNull(message ="配達時間を入力してください")
+	/** 配達時間 */
+	@NotNull(message = "配達時間を入力してください")
 	private Integer deliveryTime;
 	/** 支払い方法 */
 	private Integer paymentMethod;
-	
+
 	public Integer getIntId() {
 		return Integer.parseInt(id);
 	}
@@ -107,7 +103,6 @@ public class OrderForm {
 		this.destinationTel = destinationTel;
 	}
 
-
 	public Integer getPaymentMethod() {
 		return paymentMethod;
 	}
@@ -115,6 +110,7 @@ public class OrderForm {
 	public void setPaymentMethod(Integer paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}
+
 	public String getId() {
 		return id;
 	}
@@ -122,8 +118,6 @@ public class OrderForm {
 	public void setId(String id) {
 		this.id = id;
 	}
-
-	
 
 	public String getDeliveryDate() {
 		return deliveryDate;
@@ -150,5 +144,4 @@ public class OrderForm {
 				+ ", paymentMethod=" + paymentMethod + "]";
 	}
 
-	
 }

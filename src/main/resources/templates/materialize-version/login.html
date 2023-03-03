@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <!--Import Google Icon Font-->
     <link
@@ -44,18 +44,11 @@
           </div>
 
           <div class="header-right">
-            <a th:href="@{/showItem/showItemList}">商品一覧</a>
-            <a th:href="@{/resister}">会員登録</a>
-            <div th:unless="${session.User}">
-              <a th:href="@{/LoginLogoutUser/toLogin}" class="login">
-                <i class="fas fa-sign-in-alt"></i>ログイン
-              </a>
-            </div>
-            <div th:if="${session.User}">
-              <a th:href="@{/LoginLogoutUser/logout}" class="logout">
-                <i class="fas fa-sign-in-alt"></i>ログアウト
-              </a>
-            </div>
+             <a th:href="@{/}">商品一覧</a>
+            <span sec:authorize="!isAuthenticated()"><a th:href="@{/resister}">会員登録</a></span>
+            <span sec:authorize="!isAuthenticated()"><a th:href="@{/toLogin}">ログイン</a></span>
+           <span sec:authorize="isAuthenticated()"><a th:href="@{/logout}">ログアウト</a></span>
+
           </div>
         </div>
       </div>
@@ -71,7 +64,7 @@
             </div>
             <form
               class="login-form"
-              th:action="@{/LoginLogoutUser/login}"
+              th:action="@{/login}"
               method="post"
             >
               <div class="row"></div>
