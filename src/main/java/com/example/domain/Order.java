@@ -2,7 +2,6 @@ package com.example.domain;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,36 +41,30 @@ public class Order {
 	private List<OrderItem> orderItemList;
 
 	/**
-	 * 商品合計の消費税を取得する.
-	 * 
-	 * @return 商品合計の消費税
-	 * @TODO 処理未
-	 */
-	public int getTax() {
-		List<OrderItem> orderItemList = new ArrayList<>();
-		int subTotal = 0;
-		for (OrderItem orderItem : orderItemList) {
-			subTotal += orderItem.getSubTotal();
-		}
-		int tax= subTotal/10;
-		return tax;
-	}
-
-	/**
 	 * カート内商品の合計金額を取得する.
 	 * 
 	 * @return カート内商品の合計金額
-	 * @TODO 処理未
 	 */
+
 	public int getCalcTotalPrice() {
-		List<OrderItem> orderItemList = new ArrayList<>();
-		int subTotal = 0;
-		for (OrderItem orderItem : orderItemList) {
-			subTotal += orderItem.getSubTotal();
+		int totalPrice = 0;
+		for (OrderItem orderItem : getOrderItemList()) {
+			totalPrice += orderItem.getSubTotalPrice();
+
 		}
-		int tax= subTotal/10;
-		int totalPrice=subTotal+tax;
 		return totalPrice;
+	}
+
+	/**
+	 * 商品合計の消費税を取得する.
+	 * 
+	 * @return 商品合計の消費税
+	 */
+
+	public int getTax() {
+		int taxPrice = 0;
+		taxPrice = (int) (getCalcTotalPrice() * 0.1);
+		return taxPrice;
 	}
 
 	public Integer getId() {
