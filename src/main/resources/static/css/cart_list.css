@@ -4,26 +4,88 @@
     ショッピングカートページのスタイル
    ======================================== */
 .cart-table-th {
-  text-align: center;
+	text-align: center;
 }
+
 .cart-item-icon img {
-  margin: auto;
-  display: block;
-  border-radius: 20px;
-  width: 100px;
-  height: 100px;
-  padding: 0 0 15px 0;
+	margin: auto;
+	display: block;
+	border-radius: 20px;
+	width: 100px;
+	height: 100px;
+	padding: 0 0 15px 0;
 }
+
 .cart-item-name {
-  text-align: center;
-  font-size: 15px;
+	text-align: center;
+	font-size: 15px;
+}
+
+
+
+.order-confirm-btn {
+	text-align: center;
+}
+
+.menyureturn {
+	font-size: 22px;
+	color: white;
+	background-color: #10673c;
+	padding: 6px 200px;
+	bottom: 300px
+}
+
+.menyureturn-display {
+	text-align: center;
+	margin: 0 130px 0 0;
+}
+
+.fa-caret-square-left {
+	padding: 0 10px 0 0;
+}
+
+.cartError {
+	width: 500px;
+	font-weight: bold;
+	color: #B71318;
+	background-attachment: scroll;
+	background-repeat: no-repeat;
+	background-clip: border-box;
+	background-color: transparent;
+	background-origin: padding-box;
+	border: solid 3px #CCC;
+	letter-spacing: normal;
+	line-height: 18px;
+	margin-left: 500px;
+	margin-bottom: 30px;
+	padding: 10px 10px 10px 0;
+	font-size: 20px;
 }
 
 .cart-total-price {
-  font-size: 35px;
-  text-align: center;
+	font-size: 35px;
+   margin-right:184px;
+	background-color: #FCE9E9;
+	width:1140px;
 }
 
-.order-confirm-btn {
-  text-align: center;
+.fa-exclamation-triangle {
+	font-size: 20px;
+	margin-right: 10px;
+}
+
+.taxprice {
+	font-size: 25px;
+	padding-left: 400px;
+	text-align: right;
+}
+
+.totalprice {
+	font-size: 32px;
+	text-align: right;
+	color: red;
+}
+
+.totaldisplay{
+	font-size: 25px;
 }

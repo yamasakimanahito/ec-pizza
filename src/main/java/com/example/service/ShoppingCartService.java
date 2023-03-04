@@ -40,14 +40,6 @@ public class ShoppingCartService {
 	@Autowired
 	private OrderItemRepository orderitemRepository;
 
-	@Autowired
-	private ItemRepository itemRepository;
-
-	@Autowired
-	private ToppingRepository toppingpository;
-
-	@Autowired
-	private HttpSession session;
 
 	/**
 	 * 注文情報インサート業務処理.
@@ -57,7 +49,6 @@ public class ShoppingCartService {
 	 */
 	public void insertCat(ShoppingCartForm form, Integer userId) {
 		Order order = orderRepository.findByUserIdAndStatus(userId, 0);
-		System.out.println(order);
 		Order orderObject = new Order();
 		if (order == null) {
 			// 注文 ユーザidは仮で１
@@ -107,22 +98,13 @@ public class ShoppingCartService {
 	/**
 	 * カートに中身表示.
 	 * 
-	 * @param userId
-	 * @return
+	 * @param userId　ユーザーID
+	 * @return　注文オーダ情報
 	 */
 	public Order showCart(Integer userId) {
 		return orderRepository.findByUserIdAndStatus(userId, 0);
 
 	}
 
-	/**
-	 * 削除.
-	 * 
-	 * @param orderItemId
-	 * @return
-	 */
-	public OrderItem confirmCart(Integer orderItemId) {
-		OrderItem orderItem = orderitemRepository.findByOrderId(orderItemId);
-		return orderItem;
-	}
+	
 }

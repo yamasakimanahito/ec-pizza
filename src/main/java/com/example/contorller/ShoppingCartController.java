@@ -56,7 +56,6 @@ public class ShoppingCartController {
 		UserInfo user = (UserInfo) session.getAttribute("User");
 
 		Order orderList = shoppingcartService.showCart(user.getId());
-
 		model.addAttribute("order", orderList);
 		System.out.println(orderList);
 
