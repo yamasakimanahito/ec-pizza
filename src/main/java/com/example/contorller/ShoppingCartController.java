@@ -43,11 +43,11 @@ public class ShoppingCartController {
 	 * @return toCartへリダイレクト
 	 */
 	@PostMapping("/insertCart")
-	public String insertCart( ShoppingCartForm form,  Model model) {
+	public String insertCart(ShoppingCartForm form, Model model) {
 
 		User user = (User) session.getAttribute("User");
 		shoppingcartService.insertCat(form, user.getId());
-	
+
 		return "redirect:/shoppingCart/toCart";
 	}
 
@@ -62,7 +62,6 @@ public class ShoppingCartController {
 		User user = (User) session.getAttribute("User");
 
 		Order orderList = shoppingcartService.showCart(user.getId());
-
 		model.addAttribute("order", orderList);
 		System.out.println(orderList);
 

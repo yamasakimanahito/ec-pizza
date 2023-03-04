@@ -25,15 +25,11 @@ import com.example.domain.Topping;
 /**
  * 注文関連レポジトリー.
  * 
- * @author matsumotoyuyya
-=======
-import org.springframework.stereotype.Repository;
-
-import com.example.domain.Order;
-/**
- * Orderドメインのリポジトリー.
- * @author yamasakimanahito
->>>>>>> develop
+ * @author matsumotoyuyya ======= import
+ *         org.springframework.stereotype.Repository;
+ * 
+ *         import com.example.domain.Order; /** Orderドメインのリポジトリー.
+ * @author yamasakimanahito >>>>>>> develop
  *
  */
 @Repository
@@ -73,9 +69,8 @@ public class OrderRepository {
 				// コメントがセットされていない状態のArticleオブジェクトをarticleListオブジェクトにadd
 				orderList.add(order);
 			}
-			
-			int nowOrderItemId = rs.getInt("oi_id");
 
+			int nowOrderItemId = rs.getInt("oi_id");
 
 			// 記事だけあってコメントがない場合はCommentオブジェクトは作らない
 			if (beforeOrderItemId != nowOrderItemId) {
@@ -142,10 +137,9 @@ public class OrderRepository {
 			System.out.println(keyHolder.getKey() + "が割り当てられました");
 		}
 
-		
 		return order;
 	}
-	
+
 	/**
 	 * 従業員情報を更新します.
 	 * 
@@ -157,7 +151,6 @@ public class OrderRepository {
 		String updateSql = "UPDATE orders  SET total_price =:totalPrice WHERE user_id =:userId;";
 		template.update(updateSql, param);
 	}
-
 
 	/**
 	 * 注文を検索します.
@@ -191,15 +184,16 @@ public class OrderRepository {
 	 * @return
 	 */
 	public Order findByUserIdAndStatus(Integer userId, Integer status) {
-		
+
 		String sql = "select o.id, o.user_id, o.status, o.total_price, o.order_date, o.destination_name, o.destination_email, o.destination_zipcode, o.destination_address, o.destination_tel, o.delivery_time, o.payment_method ,\n"
 				+ "oi.id as oi_id , oi.item_id as oi_item_id , oi.order_id as oi_order_id , oi.quantity as oi_quantity , oi.size as oi_size,\n"
 				+ "ot.id as ot_id , ot.topping_id as ot_topping_id,  ot.order_item_id  as ot_order_item_id, \n"
 				+ "i.id  as i_id, i.name as i_name , i.description as i_description , i.price_m as i_price_m , i.price_l as i_price_l , i.image_path as i_image_path,\n"
 				+ "t.id as t_id ,t.name as t_name , t.price_m as t_price_m , t.price_l as t_price_l\n"
 				+ "from orders o\n" + " LEFT join order_items oi on o.id = oi.order_id \n"
-				+ " LEFT join order_toppings ot on oi.id = ot.order_item_id \n" + "LEFT join items i on i.id = oi.item_id \n"
-				+ "LEFT join toppings t on t.id = ot.topping_id where o.user_id =:userId and o.status=:status;";
+				+ " LEFT join order_toppings ot on oi.id = ot.order_item_id \n"
+				+ "LEFT join items i on i.id = oi.item_id \n"
+				+ "LEFT join toppings t on t.id = ot.topping_id where o.user_id =:userId and o.status=:status order by oi.id desc;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
 		List<Order> orderList = template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
 		if (orderList.size() == 0) {
@@ -207,6 +201,5 @@ public class OrderRepository {
 		}
 		return orderList.get(0);
 	}
-
 
 }
