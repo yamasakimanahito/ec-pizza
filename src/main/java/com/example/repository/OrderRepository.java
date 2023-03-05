@@ -5,9 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -25,31 +23,29 @@ import com.example.domain.Topping;
 /**
  * 注文関連レポジトリー.
  * 
- * @author matsumotoyuyya ======= import
- *         org.springframework.stereotype.Repository;
- * 
- *         import com.example.domain.Order; /** Orderドメインのリポジトリー.
- * @author yamasakimanahito >>>>>>> develop
+ * @author matsumotoyuyya
  *
  */
 @Repository
 public class OrderRepository {
 
+	/**
+	 * 注文、注文商品、注文トッピングを結合します.
+	 */
 	private static final ResultSetExtractor<List<Order>> ORDER_RESULT_SET_EXTRACTOR = (rs) -> {
-		// 記事一覧が入るarticleListを生成
+
 		List<Order> orderList = new LinkedList<Order>();
 		List<OrderItem> orderItemList = null;
 		List<OrderTopping> orderToppingsList = null;
 
-		// 前の行の記事IDを退避しておく変数
 		long beforeorderId = 0;
 		long beforeOrderItemId = 0;
 
 		while (rs.next()) {
-			// 現在検索されている記事IDを退避
+
 			int nowOrderId = rs.getInt("id");
 
-			// 現在の記事IDと前の記事IDが違う場合はArticleオブジェクトを生成
+			// 注文
 			if (nowOrderId != beforeorderId) {
 				Order order = new Order();
 				order.setId(nowOrderId);
@@ -63,16 +59,13 @@ public class OrderRepository {
 				order.setDestinationTel(rs.getString("destination_tel"));
 				order.setDeliveryTime(rs.getTimestamp("delivery_time"));
 				order.setPaymentMethod(rs.getInt("payment_method"));
-				// 空のコメントリストを作成しArticleオブジェクトにセットしておく
 				orderItemList = new ArrayList<OrderItem>();
 				order.setOrderItemList(orderItemList);
-				// コメントがセットされていない状態のArticleオブジェクトをarticleListオブジェクトにadd
 				orderList.add(order);
 			}
 
 			int nowOrderItemId = rs.getInt("oi_id");
-
-			// 記事だけあってコメントがない場合はCommentオブジェクトは作らない
+             //注文商品
 			if (beforeOrderItemId != nowOrderItemId) {
 				OrderItem orderItem = new OrderItem();
 				orderItem.setId(rs.getInt("oi_id"));
@@ -90,9 +83,9 @@ public class OrderRepository {
 				orderItem.setItem(item);
 				orderToppingsList = new ArrayList<OrderTopping>();
 				orderItem.setOrderToppingList(orderToppingsList);
-				// コメントをarticleオブジェクト内にセットされているcommentListに直接addしている(参照型なのでこのようなことができる)
 				orderItemList.add(orderItem);
 			}
+			//注文トッピング
 			if (rs.getInt("ot_id") != 0) {
 				OrderTopping orderTopping = new OrderTopping();
 				orderTopping.setId(rs.getInt("ot_id"));
@@ -104,16 +97,16 @@ public class OrderRepository {
 				topping.setPriceM(rs.getInt("t_price_m"));
 				topping.setPriceL(rs.getInt("t_price_l"));
 				orderTopping.setTopping(topping);
-				// コメントをarticleオブジェクト内にセットされているcommentListに直接addしている(参照型なのでこのようなことができる)
 				orderToppingsList.add(orderTopping);
 			}
 
-			// 現在の記事IDを前の記事IDを入れる退避IDに格納
 			beforeorderId = nowOrderId;
 			beforeOrderItemId = nowOrderItemId;
 		}
 		return orderList;
 	};
+	
+	
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 
@@ -141,7 +134,7 @@ public class OrderRepository {
 	}
 
 	/**
-	 * 従業員情報を更新します.
+	 * 注文情報を更新します.
 	 * 
 	 * @param employee 従業員情報
 	 */
@@ -153,7 +146,7 @@ public class OrderRepository {
 	}
 
 	/**
-	 * 注文を検索します.
+	 * 注文情報を検索します.
 	 * 
 	 * @param id ID
 	 * @return 注文検索結果
@@ -177,7 +170,7 @@ public class OrderRepository {
 	}
 
 	/**
-	 * ？
+	 * 注文状態を検索します.
 	 * 
 	 * @param userId ユーザーID
 	 * @param status 状態

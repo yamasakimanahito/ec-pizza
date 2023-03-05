@@ -11,8 +11,7 @@
 	margin: auto;
 	display: block;
 	border-radius: 20px;
-	width: 100px;
-	height: 100px;
+	
 	padding: 0 0 15px 0;
 }
 
@@ -32,7 +31,8 @@
 	color: white;
 	background-color: #10673c;
 	padding: 6px 200px;
-	bottom: 300px
+	bottom: 300px;
+	margin-left: 100px;
 }
 
 .menyureturn-display {
@@ -89,3 +89,22 @@
 .totaldisplay{
 	font-size: 25px;
 }
+.alldeleted{
+	margin-left: 1200px
+}
+
+.alldeleted-btn{
+	text-align: right;
+	background-color: #26A69A;
+	color: white;
+	border: none;
+    border-radius: 2px;
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 16px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    -webkit-tap-highlight-color: transparent;
+}
+

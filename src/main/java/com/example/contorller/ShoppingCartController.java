@@ -33,14 +33,15 @@ public class ShoppingCartController {
 	/**
 	 * 商品をカートに追加する.
 	 * 
-	 * @param form ショッピングカートフォーム
+	 * @param form  ショッピングカートフォーム
+	 * @param model モデル
 	 * @return toCartへリダイレクト
 	 */
 	@PostMapping("/insertCart")
 	public String insertCart(ShoppingCartForm form, Model model) {
 
 		UserInfo user = (UserInfo) session.getAttribute("User");
-		shoppingcartService.insertCat(form, user.getId());
+		shoppingcartService.insertCat(form, 1);
 
 		return "redirect:/shoppingCart/toCart";
 	}
@@ -48,14 +49,16 @@ public class ShoppingCartController {
 	/**
 	 * カートリストを表示.
 	 * 
+	 * @param form  ショッピングカートフォーム
+	 * @param model モデル
 	 * @return カートリスト
 	 */
 	@GetMapping("/toCart")
-	public String toCartList(Model model) {
+	public String toCartList(ShoppingCartForm form, Model model) {
 
 		UserInfo user = (UserInfo) session.getAttribute("User");
 
-		Order orderList = shoppingcartService.showCart(user.getId());
+		Order orderList = shoppingcartService.showCart(1);
 		model.addAttribute("order", orderList);
 		System.out.println(orderList);
 
@@ -65,28 +68,43 @@ public class ShoppingCartController {
 	/**
 	 * カートの中身表示.
 	 * 
+	 * @param form  ショッピングカートフォーム
+	 * @param model モデル * @return カートリスト
 	 * @return カートリスト
 	 */
 	@GetMapping("/showCart")
-	public String showCart(Model model) {
+	public String showCart(ShoppingCartForm form, Model model) {
 		UserInfo user = (UserInfo) session.getAttribute("User");
 
 		Order orderList = shoppingcartService.showCart(user.getId());
-
+		System.out.println(orderList);
 		model.addAttribute("order", orderList);
 		return "/materialize-version/cart_list";
 	}
 
 	/**
-	 * 注文商品削除.
+	 * カート商品削除.
 	 * 
 	 * @param orderItemId 注文商品ID
 	 * @return toCartへリダイレクト
 	 */
 	@GetMapping("/deleteCart")
 	public String deleteCartItems(Integer orderItemId) {
-		shoppingcartService.deleteCartContents(orderItemId);
+		shoppingcartService.deleteByOrderId(orderItemId);
 
+		return "redirect:/shoppingCart/toCart";
+	}
+
+	/**
+	 * カート商品を一括削除する.
+	 * 
+	 * @param orderId オーダーアイテムId
+	 * @return toCartへリダイレクト
+	 */
+	@GetMapping("/allDeleteOrderItem")
+	public String allDeleteOrderItem(Integer orderId) {
+
+		shoppingcartService.allDeleteOrderItem(orderId);
 		return "redirect:/shoppingCart/toCart";
 	}
 
