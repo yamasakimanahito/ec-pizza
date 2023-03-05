@@ -42,13 +42,8 @@ public class OrderController {
 	 */
 	@GetMapping("/toOrderConfirm")
 	public String orderConfirm(OrderForm form, Integer orderId, Model model) {
-		System.out.println("おーだiD" + orderId);
-
 		Order orderList = orderConfirmService.GetOrderId(orderId);
-		System.out.println(orderList);
 		model.addAttribute("order", orderList);
-		System.out.println(orderList);
-
 		return "/materialize-version/order_confirm";
 	}
 
