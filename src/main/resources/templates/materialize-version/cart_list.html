@@ -29,9 +29,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ラクラクピザ</title>
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css"
+	rel="stylesheet">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"
+	type="text/javascript"></script>
 </head>
 <body>
 	<header>
+
 		<div class="container">
 			<div class="header">
 				<div class="header-left">
@@ -59,135 +68,151 @@
 				</div>
 			</div>
 		</div>
+
 	</header>
 
-	
-		
-
-			<div class="top-wrapper">
-
-				<div class="container">
-					<h1 class="page-title">ショッピングカート</h1>
 
 
 
-					<!-- table -->
-					
-					<div class="row">
+	<div class="top-wrapper">
 
-						<table class="striped">
-						
-													<th:block th:if="${order.calcTotalPrice != 0}">
-							<thead>
+		<div class="container">
+			<h1 class="page-title">ショッピングカート</h1>
 
 
 
+			<!-- table -->
 
-								<tr>
+			<div class="row">
 
-									<th class="cart-table-th">商品名</th>
-									<th>サイズ、価格(税抜)、数量</th>
-									<th>トッピング 価格(税抜)</th>
-									<th>小計</th>
-									
-								</tr>
-							</thead>
-								</th:block>
-							
-							<tbody>
-								<tr th:each=" orderItemList : ${order.orderItemList}">
-									<th:block>
-										<th:block th:each=" item : ${orderItemList.item}">
+				<table class="striped">
 
-											<td class="cart-item-name">
-												<div class="cart-item-icon">
-													<img th:src="@{/img/{image} (image=${item.imagePath})}" />
-													<th:block th:text="${item.name}"></th:block>
-												</div>
-											</td>
-											<td><span th:if="${orderItemList.size == 'L'}">&nbsp;
-													&nbsp;<span class="price">L</span>
-													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
-													th:text="${#numbers.formatInteger(item.priceL, 1, 'COMMA')}">
-														2,574円</span>円&nbsp;&nbsp; &nbsp;<th:block
-														th:text="${orderItemList.quantity}"></th:block>個
-											</span> <span th:if="${orderItemList.size == 'M'}">&nbsp;
-													&nbsp;<span class="price">M</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
-													th:text="${#numbers.formatInteger(item.priceM, 1, 'COMMA')}">1,490円
-												</span>円&nbsp;&nbsp; &nbsp; <th:block
-														th:text="${orderItemList.quantity}"></th:block>個
-											</span></td>
-											<td>
+					<th:block th:if="${order.calcTotalPrice != 0}">
+						<thead>
 
 
-												<ul
-													th:each=" ordertopping : ${orderItemList.OrderToppingList}">
 
 
-													<li th:each=" topping : ${ordertopping.topping}"><th:block
-															th:text="${topping.name}"></th:block> <span
-														th:if="${orderItemList.size == 'M'}"
-														th:text="${topping.priceM}"></span> <span
-														th:if="${orderItemList.size == 'L'}"
-														th:text="${topping.priceL}"></span> 円</li>
-												</ul>
-											</td>
-											<td><span
-												th:text="${#numbers.formatInteger(orderItemList.subTotalPrice, 1, 'COMMA')}"></span>円
-											</td>
-											<td><a
-												th:href="@{/shoppingCart/deleteCart?orderItemId=} + ${orderItemList.id}">
-													<button class="btn" type="submit">
-														<span>削除</span>
+							<tr>
 
-													</button>
-											</a></td>
-										</th:block>
-									</th:block>
-								</tr>
-							</tbody>
+								<th class="cart-table-th">商品名</th>
+								<th>サイズ、価格(税抜)、数量</th>
+								<th>トッピング 価格(税抜)</th>
+								<th>小計</th>
+								<th><a
+									th:href="@{/shoppingCart/allDeleteOrderItem?orderId=} + ${order.id}">
+										<button type="button" class="alldeleted-btn">全ての商品を削除</button>
+								</a></th>
 
-						</table>
-					</div>
-				</div>
+							</tr>
+						</thead>
+					</th:block>
 
+					<tbody>
+
+						<tr th:each=" orderItemList : ${order.orderItemList}">
+
+							<th:block th:each=" item : ${orderItemList.item}">
+
+								<td class="cart-item-name">
+									<div class="cart-item-icon">
+										<a th:href="@{/img/{image} (image=${item.imagePath})}"
+											data-lightbox="group"> <img
+											th:src="@{/img/{image} (image=${item.imagePath})}"
+											width="110" height="110" /></a>
+										<th:block th:text="${item.name}"></th:block>
+
+									</div>
+								</td>
+								<td><span th:if="${orderItemList.size == 'L'}">&nbsp;
+										&nbsp;<span class="price">L</span>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+										th:text="${#numbers.formatInteger(item.priceL, 1, 'COMMA')}">
+											2,574円</span>円&nbsp;&nbsp; &nbsp;<th:block
+											th:text="${orderItemList.quantity}"></th:block>個
+								</span> <span th:if="${orderItemList.size == 'M'}">&nbsp; &nbsp;<span
+										class="price">M</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+										th:text="${#numbers.formatInteger(item.priceM, 1, 'COMMA')}">1,490円
+									</span>円&nbsp;&nbsp; &nbsp; <th:block
+											th:text="${orderItemList.quantity}"></th:block>個
+								</span></td>
+								<td>
+
+
+									<ul th:each=" ordertopping : ${orderItemList.OrderToppingList}">
+
+
+										<li th:each=" topping : ${ordertopping.topping}"><th:block
+												th:text="${topping.name}"></th:block> <span
+											th:if="${orderItemList.size == 'M'}"
+											th:text="${topping.priceM}"></span> <span
+											th:if="${orderItemList.size == 'L'}"
+											th:text="${topping.priceL}"></span> 円</li>
+									</ul>
+								</td>
+								<td><span
+									th:text="${#numbers.formatInteger(orderItemList.subTotalPrice, 1, 'COMMA')}"></span>円
+								</td>
+								<td><a
+									th:href="@{/shoppingCart/deleteCart?orderItemId=} + ${orderItemList.id}">
+										<button class="btn" type="submit">
+											<span>削除</span>
+
+										</button>
+								</a></td>
+
+							</th:block>
+						</th:block>
+
+						</tr>
+					</tbody>
+
+				</table>
 			</div>
-
-		<div th:if="${order.calcTotalPrice != 0}">
-		
-
-			<div class="row cart-total-price">
-
-			<div class="totalprice">
-		<span class="totaldisplay">	ご注文金額合計 (税込) :</span> <span 
-					th:text="${#numbers.formatInteger(order.calcTotalPrice, 1, 'COMMA')} "></span><span class="totaldisplay">円</span></div>
-					<div class="taxprice">(内消費税額：<span  th:text="${#numbers.formatInteger(order.tax, 1, 'COMMA')}">消費税：8,000円</span>円)</div>	
-			</div>
-			<div class="row order-confirm-btn">
-				<button class="btn" type="button"
-					onclick="location.href='order_confirm.html'">
-					<span>注文に進む</span>
-				</button>
-			</div>
-			</div>
-			
-			<!-- 消費税が0の時 -->
-					<div th:if="${order.calcTotalPrice == 0}" class="menyureturn-display">
-			<div class="cartError"><i class="fas fa-exclamation-triangle"></i>商品が選択されていません</div>
-　　　　　　　　<a th:href="@{/showItem/showItemList}" class="menyureturn">
-			<i class="far fa-caret-square-left"></i><span >メニューを見る</span></a>
-		
 		</div>
-		<!-- end container -->
-		<footer>
-			<div class="container">
-				<img th:src="@{/img/header_logo.png}" />
-				<p>本格ピザをあなたにお届け！</p>
-			</div>
-		</footer>
-		<!-- Compiled and minified JavaScript -->
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	
+
+	</div>
+
+	<div th:if="${order.calcTotalPrice != 0}">
+
+	<div class="row cart-total-price">
+
+		<div class="totalprice">
+			<span class="totaldisplay"> ご注文金額合計 (税込) :</span> <span
+				th:text="${#numbers.formatInteger(order.calcTotalPrice, 1, 'COMMA')} "></span><span
+				class="totaldisplay">円</span>
+		</div>
+		<div class="taxprice">
+			(内消費税額：<span
+				th:text="${#numbers.formatInteger(order.tax, 1, 'COMMA')}">消費税：8,000円</span>円)
+		</div>
+	</div>
+	<div class="row order-confirm-btn">
+		<button class="btn" type="button"
+			onclick="location.href='order_confirm.html'">
+			<span>注文に進む</span>
+		</button>
+	</div>
+</div>
+	<!-- 商品がない時に表示 -->
+	<div th:if="${order.calcTotalPrice == 0}" class="menyureturn-display">
+		<div class="cartError">
+			<i class="fas fa-exclamation-triangle"></i>商品が選択されていません
+		</div>
+		<a th:href="@{/showItem/showItemList}" class="menyureturn"> <i
+			class="far fa-caret-square-left"></i><span>メニューを見る</span></a>
+
+	</div>
+	<!-- end container -->
+	<footer>
+		<div class="container">
+			<img th:src="@{/img/header_logo.png}" />
+			<p>本格ピザをあなたにお届け！</p>
+		</div>
+	</footer>
+	<!-- Compiled and minified JavaScript -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 </body>
 </html>
