@@ -21,7 +21,7 @@ import com.example.service.ResisterUserService;
  *
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/resister")
 public class ResisterUserController {
 
 	@Autowired
@@ -36,7 +36,7 @@ public class ResisterUserController {
 	 * @param form フォーム
 	 * @return ユーザー登録画面
 	 */
-	@GetMapping("/resister")
+	@GetMapping("/toResister")
 	public String resister(ResisterUserForm form) {
 		return "/materialize-version/register_user";
 	};
