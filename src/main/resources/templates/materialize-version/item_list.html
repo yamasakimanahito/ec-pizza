@@ -63,8 +63,21 @@
     <div class="search-wrapper">
       <div class="container">
       <div style="color:red;" th:text="${result}"></div>
-        <form th:action="@{/findByName}" method="post" class="search-form">
-          <input type="text" name="name" class="search-name-input" />
+        <form th:action="@{/findByName}" method="get" class="search-form">
+          <!--  <input type="text" name="name" class="search-name-input" />-->
+           <input
+            type="text"
+            class="search-name-input"
+            name="name"
+            autocomplete="on"
+            list="itemAClist"
+          />
+          <datalist id="itemAClist">
+            <option
+              th:each="item : ${itemList}"
+              th:value="${item.name}"
+            ></option>
+          </datalist>
           
           
           <div class="order-by-price-selectbox">
