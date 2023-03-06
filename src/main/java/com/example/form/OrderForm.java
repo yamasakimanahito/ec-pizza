@@ -31,7 +31,7 @@ public class OrderForm {
 	@NotBlank(message = "住所を入力して下さい")
 	private String destinationAddress;
 	/** 宛先電話番号 */
-	@Pattern(regexp = "^[0-9]{4}-[0-9]{4}-[0-9]{4}$", message = "電話番号はXXXX-XXXX-XXXXの形式で入力して下さい")
+	@Pattern(regexp = "^[0-9]{2,4}-[0-9]{2,4}-[0-9]{3,4}$", message = "電話番号はXXXX-XXXX-XXXXの形式で入力して下さい")
 	private String destinationTel;
 	/** 配達日 */
 
