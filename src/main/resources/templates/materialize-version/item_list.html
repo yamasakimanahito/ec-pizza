@@ -63,12 +63,12 @@
     <div class="search-wrapper">
       <div class="container">
       <div style="color:red;" th:text="${result}"></div>
-        <form th:action="@{/findByName}" method="post" class="search-form">
+        <form th:action="@{/findByName}" method="get" class="search-form">
           <!--  <input type="text" name="name" class="search-name-input" />-->
            <input
             type="text"
             class="search-name-input"
-            name="search"
+            name="name"
             autocomplete="on"
             list="itemAClist"
           />

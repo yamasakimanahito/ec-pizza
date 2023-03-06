@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Item;
@@ -47,7 +46,7 @@ public class ShowItemListController {
 	 * @return 商品一覧画面へ
 	 */
 
-	@PostMapping("/findByName")
+	@GetMapping("/findByName")
 	public String findByName(String name, String order, Model model) {
 		if (name.equals("")) {
 			model.addAttribute("result", "検索結果が0件の為、全件検索します");
