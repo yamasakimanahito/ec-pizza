@@ -128,7 +128,6 @@
 		</div>
 
 	</div>
-
        <div class="row cart-total-price">
 			<div class="totalprice">
 				<span class="totaldisplay"> ご注文金額合計 (税込) :</span> <span
@@ -140,21 +139,20 @@
 					th:text="${#numbers.formatInteger(order.tax, 1, 'COMMA')}">消費税：8,000円</span>円)
 			</div>
 			</div>
-			
        <form th:action="@{/orderCon/order}" method="post" th:object="${orderForm}">
         <h2 class="page-title">お届け先情報</h2>
         <div class="order-confirm-delivery-info">
           <div class="row">
             <div th:errors="*{destinationName}" style="color:red" ></div>
             <div class="input-field">
-              <input id="name"  name = "destinationName" type="text" th:field="*{destinationName}" />
+              <input id="name"  name = "destinationName" type="text" th:field="*{destinationName}"  >
               <label for="name">お名前</label>
             </div>
           </div>
           <div class="row">
              <div th:errors="*{destinationEmail}" style="color:red"></div>
             <div class="input-field">
-              <input id="email" name ="destinationEmail" type="email" th:field="*{destinationEmail}"/>
+              <input id="email" name ="destinationEmail" type="email" th:field="*{destinationEmail}" >
               <label for="email">メールアドレス</label>
             </div>
           </div>
@@ -164,7 +162,7 @@
             <div class="input-field">
               <input id="zipcode"name="destinationZipcode"  type="text" maxlength="8" th:field="*{destinationZipcode}"/>
               <label for="zipcode">郵便番号(XXX-XXXX)</label>
-              <button class="btn" type="button" id="get_address_btn">
+              <button class="btn" type="button" id="search">
                 <span>住所検索</span>
               </button>
             </div>
@@ -241,7 +239,7 @@
           <span>
             <label class="order-confirm-payment-method-radio">
               <input
-                name="status"
+                name="paymentMethod"
                 type="radio"
                 th:value="1"
                 checked="checked"
@@ -249,7 +247,7 @@
               <span>代金引換</span>
             </label>
             <label class="order-confirm-payment-method-radio">
-              <input name="status" type="radio" th:value="2" />
+              <input name="paymentMethod" type="radio" th:value="2"  />
               <span>クレジットカード</span>
             </label>
           </span>

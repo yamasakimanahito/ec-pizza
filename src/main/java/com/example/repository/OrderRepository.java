@@ -146,7 +146,7 @@ public class OrderRepository {
 	public void update(Order order) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 
-		String updateSql = "UPDATE orders  SET total_price =:totalPrice WHERE user_id =:userId;";
+		String updateSql = "UPDATE orders SET status=:status,total_price =:totalPrice,order_date=:orderDate,destination_name=:destinationName,destination_email=:destinationEmail,destination_zipcode=:destinationZipcode,destination_address=:destinationAddress,destination_tel=:destinationTel,delivery_time=:deliveryTime,payment_method=:paymentMethod WHERE user_id =:userId;";
 		template.update(updateSql, param);
 	}
 
@@ -200,5 +200,7 @@ public class OrderRepository {
 		}
 		return orderList.get(0);
 	}
+	
+	
 
 }
