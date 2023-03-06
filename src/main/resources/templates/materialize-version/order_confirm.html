@@ -129,14 +129,14 @@
           <div class="row">
             <div th:errors="*{destinationName}" style="color:red" ></div>
             <div class="input-field">
-              <input id="name"  name = "destinationName" type="text" th:field="*{destinationName}" />
+              <input id="name"  name = "destinationName" type="text" th:field="*{destinationName}"  >
               <label for="name">お名前</label>
             </div>
           </div>
           <div class="row">
              <div th:errors="*{destinationEmail}" style="color:red"></div>
             <div class="input-field">
-              <input id="email" name ="destinationEmail" type="email" th:field="*{destinationEmail}"/>
+              <input id="email" name ="destinationEmail" type="email" th:field="*{destinationEmail}" >
               <label for="email">メールアドレス</label>
             </div>
           </div>
