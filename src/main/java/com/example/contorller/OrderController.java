@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.LoginUser;
 import com.example.domain.Order;
-import com.example.domain.UserInfo;
 import com.example.form.OrderForm;
 import com.example.service.OrderConfirmService;
 import com.example.service.OrderService;
@@ -44,9 +43,8 @@ public class OrderController {
 	 * @return
 	 */
 	@GetMapping("/toOrderConfirm")
-	public String orderConfirm(OrderForm form, Integer orderId, Model model,@AuthenticationPrincipal  LoginUser loginUser) {
-		UserInfo userinfo = loginUser.getUserInfo();
-		model.addAttribute("userinfo",userinfo);
+	public String orderConfirm(OrderForm form, Integer orderId, Model model,
+			@AuthenticationPrincipal LoginUser loginUser) {
 		Order orderList = orderConfirmService.GetOrderId(orderId);
 		model.addAttribute("order", orderList);
 		return "/materialize-version/order_confirm";
@@ -61,7 +59,8 @@ public class OrderController {
 	 * @return 注文完了画面へ
 	 */
 	@PostMapping("/order")
-	public String order(@Validated OrderForm form, BindingResult result, Model model,@AuthenticationPrincipal  LoginUser loginUser) {
+	public String order(@Validated OrderForm form, BindingResult result, Model model,
+			@AuthenticationPrincipal LoginUser loginUser) {
 		if (form.getDestinationEmail().equals("")) {
 			result.rejectValue("destinationEmail", "", "メールアドレスを入力して下さい");
 		}
@@ -94,13 +93,12 @@ public class OrderController {
 		}
 
 		if (result.hasErrors()) {
-			return orderConfirm(form, form.getIntId(), model,loginUser);
-		}
+			return orderConfirm(form, form.getIntId(), model, loginUser);
 
+		}
 		orderService.order(form);
 
 		return "/materialize-version/order_finished";
 
 	}
-
 }
