@@ -121,7 +121,7 @@
         <div class="row cart-total-price">
           消費税：<span th:text="${#numbers.formatInteger(order.tax, 1, 'COMMA')}">消費税：8,000円</span>円  
 			<br> ご注文金額合計 (税込) 
-		<span th:text="${#numbers.formatInteger(order.calcTotalPrice, 1, 'COMMA')} "></span>円  
+		<span th:text="${#numbers.formatInteger(order.calcTotalPrice, 1, 'COMMA')} " th:field="${totalPrice}"></span>円  
         </div>
        <form th:action="@{/orderCon/order}" method="post" th:object="${orderForm}">
         <h2 class="page-title">お届け先情報</h2>
@@ -223,7 +223,7 @@
           <span>
             <label class="order-confirm-payment-method-radio">
               <input
-                name="status"
+                name="paymentMethod"
                 type="radio"
                 th:value="1"
                 checked="checked"
@@ -231,7 +231,7 @@
               <span>代金引換</span>
             </label>
             <label class="order-confirm-payment-method-radio">
-              <input name="status" type="radio" th:value="2" />
+              <input name="paymentMethod" type="radio" th:value="2"  />
               <span>クレジットカード</span>
             </label>
           </span>
