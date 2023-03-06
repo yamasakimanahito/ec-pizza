@@ -157,7 +157,7 @@
               </div>
             </div>
             <div class="error" th:errors="*{password}">
-              パスワードは小文字・大文字・記号を含めた８文字以上１６文字以内で設定してください
+              パスワードは小文字・大文字・記号・数字を含めた８文字以上１６文字以内で設定してください
             </div>
             <div class="row">
               <div class="input-field col s12">
@@ -169,7 +169,7 @@
                   class="validate"
                   minlength="8"
                 />
-                <label for="password">パスワード(a-z,A-Z,記号.?/-いずれか1つをそれぞれ含めた8-16文字)</label>
+                <label for="password">パスワード(a-z,A-Z,数字,記号.?/-いずれか1つをそれぞれ含めた8-16文字)</label>
               </div>
             </div>
             <div class="error" th:errors="*{confirmationPassword}">
