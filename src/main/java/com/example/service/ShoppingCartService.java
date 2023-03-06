@@ -1,24 +1,19 @@
 package com.example.service;
 
-import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.domain.Item;
 import com.example.domain.Order;
 import com.example.domain.OrderItem;
 import com.example.domain.OrderTopping;
 import com.example.form.ShoppingCartForm;
-import com.example.repository.ItemRepository;
 import com.example.repository.OrderItemRepository;
 import com.example.repository.OrderRepository;
 import com.example.repository.OrderToppingRepository;
-import com.example.repository.ToppingRepository;
 
-import jakarta.servlet.http.HttpSession;
 
 /**
  * カート関連サービス.

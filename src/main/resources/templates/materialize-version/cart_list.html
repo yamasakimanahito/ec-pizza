@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <!--Import Google Icon Font-->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -43,20 +44,25 @@
 		<div class="container">
 			<div class="header">
 				<div class="header-left">
-					<a th:href="@{/showItem/showItemList}"><img class="logo"
-						th:src="@{/img/header_logo.png}" /> </a>
+					<a th:href="@{/}"> <img class="logo"
+						th:src="@{/img/header_logo.png}" />
+					</a>
 				</div>
+
 				<div class="header-right">
 					<a th:href="@{/}">商品一覧</a> <span sec:authorize="!isAuthenticated()"><a
-						th:href="@{/resister}">会員登録</a></span> <a href="#"><i
+						th:href="@{/resister/toResister}">会員登録</a></span> <a
+						th:href="@{/shoppingCart/toCart}"><i
 						class="fas fa-shopping-cart"></i>カート</a> <span
 						sec:authorize="!isAuthenticated()"><a th:href="@{/toLogin}">ログイン</a></span>
 					<span sec:authorize="isAuthenticated()"><a
 						th:href="@{/logout}">ログアウト</a></span> <a href="order_history.html">注文履歴</a>
 				</div>
-
 			</div>
 		</div>
+
+
+
 	</header>
 	<div class="top-wrapper">
 		<div class="container">
@@ -154,7 +160,7 @@
 		<div class="cartError">
 			<i class="fas fa-exclamation-triangle"></i>商品が選択されていません
 		</div>
-		<a th:href="@{/showItem/showItemList}" class="menyureturn"> <i
+		<a th:href="@{/}" class="menyureturn"> <i
 			class="far fa-caret-square-left"></i><span>メニューを見る</span></a>
 	</div>
 	<!-- end container -->

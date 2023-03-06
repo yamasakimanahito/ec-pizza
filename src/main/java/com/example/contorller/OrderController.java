@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.domain.LoginUser;
 import com.example.domain.Order;
 import com.example.form.OrderForm;
 import com.example.service.OrderConfirmService;
@@ -41,14 +43,10 @@ public class OrderController {
 	 * @return
 	 */
 	@GetMapping("/toOrderConfirm")
-	public String orderConfirm(OrderForm form, Integer orderId, Model model) {
-		System.out.println("おーだiD" + orderId);
-
+	public String orderConfirm(OrderForm form, Integer orderId, Model model,
+			@AuthenticationPrincipal LoginUser loginUser) {
 		Order orderList = orderConfirmService.GetOrderId(orderId);
-		System.out.println(orderList);
 		model.addAttribute("order", orderList);
-		System.out.println(orderList);
-
 		return "/materialize-version/order_confirm";
 	}
 
@@ -61,7 +59,8 @@ public class OrderController {
 	 * @return 注文完了画面へ
 	 */
 	@PostMapping("/order")
-	public String order(@Validated OrderForm form, BindingResult result, Model model) {
+	public String order(@Validated OrderForm form, BindingResult result, Model model,
+			@AuthenticationPrincipal LoginUser loginUser) {
 		if (form.getDestinationEmail().equals("")) {
 			result.rejectValue("destinationEmail", "", "メールアドレスを入力して下さい");
 		}
@@ -73,7 +72,7 @@ public class OrderController {
 		if (result.hasErrors()) {
 			System.out.println("エラー時" + form.getIntId());
 
-			return orderConfirm(form, form.getIntId(), model);
+			return orderConfirm(form, form.getIntId(), model, loginUser);
 		}
 
 		LocalDateTime nowLocalDateTime = LocalDateTime.now();
@@ -94,7 +93,7 @@ public class OrderController {
 		}
 
 		if (result.hasErrors()) {
-			return orderConfirm(form, form.getIntId(), model);
+			return orderConfirm(form, form.getIntId(), model, loginUser);
 		}
 
 		orderService.order(form);

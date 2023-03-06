@@ -41,9 +41,9 @@ public class SecurityConfig {
 
 		http.formLogin() // ログインに関する設定
 				.loginPage("/Login/toLogin") // ログイン画面に遷移させるパス(ログイン認証が必要なパスを指定してかつログインされていないとこのパスに遷移される)
-				.loginProcessingUrl("/login") // ログインボタンを押した際に遷移させるパス(ここに遷移させれば自動的にログインが行われる)
+				.loginProcessingUrl("/Login/toLogin") // ログインボタンを押した際に遷移させるパス(ここに遷移させれば自動的にログインが行われる)
 				.failureUrl("/Login/toLogin?error=true") // ログイン失敗に遷移させるパス
-				.defaultSuccessUrl("/showItem/showItemList", false) // 第1引数:デフォルトでログイン成功時に遷移させるパス
+				.defaultSuccessUrl("/", true) // 第1引数:デフォルトでログイン成功時に遷移させるパス
 				// 第2引数: true :認証後常に第1引数のパスに遷移
 				// false:認証されてなくて一度ログイン画面に飛ばされてもログインしたら指定したURLに遷移
 				.usernameParameter("email") // 認証時に使用するユーザ名のリクエストパラメータ名(今回はメールアドレスを使用)

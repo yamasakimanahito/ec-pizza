@@ -1,18 +1,19 @@
 package com.example.contorller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.domain.LoginUser;
 import com.example.domain.Order;
 import com.example.domain.UserInfo;
 import com.example.form.ShoppingCartForm;
 import com.example.service.ShoppingCartService;
 
-import jakarta.servlet.http.HttpSession;
 
 /**
  * カート関連コントローラー.
@@ -24,9 +25,7 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/shoppingCart")
 public class ShoppingCartController {
 
-	@Autowired
-	private HttpSession session;
-
+	
 	@Autowired
 	private ShoppingCartService shoppingcartService;
 
@@ -38,10 +37,11 @@ public class ShoppingCartController {
 	 * @return toCartへリダイレクト
 	 */
 	@PostMapping("/insertCart")
-	public String insertCart(ShoppingCartForm form, Model model) {
+	public String insertCart(ShoppingCartForm form, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 
-		UserInfo user = (UserInfo) session.getAttribute("User");
-		shoppingcartService.insertCat(form, 1);
+
+		UserInfo user = loginUser.getUserInfo();
+		shoppingcartService.insertCat(form, user.getId());
 
 		return "redirect:/shoppingCart/toCart";
 	}
@@ -54,11 +54,11 @@ public class ShoppingCartController {
 	 * @return カートリスト
 	 */
 	@GetMapping("/toCart")
-	public String toCartList(ShoppingCartForm form, Model model) {
+	public String toCartList(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 
-		UserInfo user = (UserInfo) session.getAttribute("User");
+		UserInfo user = loginUser.getUserInfo();
 
-		Order orderList = shoppingcartService.showCart(1);
+		Order orderList = shoppingcartService.showCart(user.getId());
 		model.addAttribute("order", orderList);
 
 		return "/materialize-version/cart_list";
@@ -72,8 +72,8 @@ public class ShoppingCartController {
 	 * @return カートリスト
 	 */
 	@GetMapping("/showCart")
-	public String showCart( Model model) {
-		UserInfo user = (UserInfo) session.getAttribute("User");
+	public String showCart(Model model, @AuthenticationPrincipal LoginUser loginUser) {
+		UserInfo user = loginUser.getUserInfo();
 
 		Order orderList = shoppingcartService.showCart(1);
 		model.addAttribute("order", orderList);
