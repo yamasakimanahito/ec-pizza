@@ -1,24 +1,19 @@
 package com.example.service;
 
-import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.domain.Item;
 import com.example.domain.Order;
 import com.example.domain.OrderItem;
 import com.example.domain.OrderTopping;
 import com.example.form.ShoppingCartForm;
-import com.example.repository.ItemRepository;
 import com.example.repository.OrderItemRepository;
 import com.example.repository.OrderRepository;
 import com.example.repository.OrderToppingRepository;
-import com.example.repository.ToppingRepository;
 
-import jakarta.servlet.http.HttpSession;
 
 /**
  * カート関連サービス.
@@ -40,15 +35,6 @@ public class ShoppingCartService {
 	@Autowired
 	private OrderItemRepository orderitemRepository;
 
-	@Autowired
-	private ItemRepository itemRepository;
-
-	@Autowired
-	private ToppingRepository toppingpository;
-
-	@Autowired
-	private HttpSession session;
-
 	/**
 	 * 注文情報インサート業務処理.
 	 * 
@@ -57,36 +43,30 @@ public class ShoppingCartService {
 	 */
 	public void insertCat(ShoppingCartForm form, Integer userId) {
 		Order order = orderRepository.findByUserIdAndStatus(userId, 0);
-		System.out.println(order);
 		Order orderObject = new Order();
+		// オーダーテーブルにユーザー情報がない場合注文テーブにインサート
 		if (order == null) {
-			// 注文 ユーザidは仮で１
 			orderObject.setUserId(userId);
 			orderObject.setStatus(0);
 			orderObject.setTotalPrice(0);
 			orderRepository.insert(orderObject);
 		}
-
-		// 注文商品 ユーザidは仮で１
+        //注文商品へインサート
 		OrderItem orderItem = new OrderItem();
 		BeanUtils.copyProperties(form, orderItem);
 
 		if (order != null) {
-			// ユーザーidがあれば合計金額を更新
-
 			orderItem.setOrderId(order.getId());
 
 		} else {
 			orderItem.setOrderId(orderObject.getId());
 		}
-
 		OrderItem orderItemInfo = orderitemRepository.insert(orderItem);
-		// 注文トッピング //nullの時は何もしない
+		
+		
+		// 注文トッピングインサート, nullの時はインサートなし
 		OrderTopping orderTopping = new OrderTopping();
-		System.out.println("中身確認" + form.getToppingIdList());
-
 		if (form.getToppingIdList() != null) {
-			System.out.println("インサート");
 			for (Integer t : form.getToppingIdList()) {
 				orderTopping.setToppingId(t);
 				orderTopping.setOrderItemId(orderItemInfo.getId());
@@ -95,34 +75,44 @@ public class ShoppingCartService {
 		}
 	}
 
+	
+
+	/**
+	 * カートに中身表示サービス.
+	 * 
+	 * @param userId ユーザーID
+	 * @return 注文オーダ情報
+	 */
+	public Order showCart(Integer userId) {
+		Order order = orderRepository.findByUserIdAndStatus(userId, 0);
+		//注文デーブルにインサートなしでカートの中身をみた時
+		Order orderObject = new Order();
+		if (order == null) {
+			orderObject.setUserId(userId);
+			orderObject.setStatus(0);
+			orderObject.setTotalPrice(0);
+			orderRepository.insert(orderObject);
+		}
+		return orderRepository.findByUserIdAndStatus(userId, 0);
+
+	}
+	
 	/**
 	 * 注文商品削除.
 	 * 
 	 * @param orderItemId 注文商品ID
 	 */
-	public void deleteCartContents(Integer orderItemId) {
+	public void deleteByOrderId(Integer orderItemId) {
 		orderitemRepository.deleteByOrderId(orderItemId);
 	}
 
 	/**
-	 * カートに中身表示.
+	 * 商品を一括削除する.
 	 * 
-	 * @param userId
-	 * @return
+	 * @param orderId オーダーアイテムId
 	 */
-	public Order showCart(Integer userId) {
-		return orderRepository.findByUserIdAndStatus(userId, 0);
-
+	public void allDeleteOrderItem(Integer orderId) {
+		orderitemRepository.allDeleteOrderItem(orderId);
 	}
 
-	/**
-	 * 削除.
-	 * 
-	 * @param orderItemId
-	 * @return
-	 */
-	public OrderItem confirmCart(Integer orderItemId) {
-		OrderItem orderItem = orderitemRepository.findByOrderId(orderItemId);
-		return orderItem;
-	}
 }
