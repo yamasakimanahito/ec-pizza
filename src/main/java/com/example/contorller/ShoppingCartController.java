@@ -75,7 +75,7 @@ public class ShoppingCartController {
 	public String showCart(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		UserInfo user = loginUser.getUserInfo();
 
-		Order orderList = shoppingcartService.showCart(1);
+		Order orderList = shoppingcartService.showCart(user.getId());
 		model.addAttribute("order", orderList);
 		return "/materialize-version/cart_list";
 	}
