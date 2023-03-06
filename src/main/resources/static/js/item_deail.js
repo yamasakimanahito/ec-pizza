@@ -33,4 +33,11 @@ $(function () {
     let price = (num + topping_price) * piza_num;
     $("#totalprice").text(price.toLocaleString());
   }
+  
+  	$(function(){
+		$(".search-form").on("click", function () {
+			const button = document.querySelector('#search')
+    		button.focus();
+  		});
+	});
 });

@@ -14,7 +14,6 @@ import com.example.domain.UserInfo;
 import com.example.form.ShoppingCartForm;
 import com.example.service.ShoppingCartService;
 
-import jakarta.servlet.http.HttpSession;
 
 /**
  * カート関連コントローラー.
@@ -26,20 +25,20 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/shoppingCart")
 public class ShoppingCartController {
 
-	@Autowired
-	private HttpSession session;
-
+	
 	@Autowired
 	private ShoppingCartService shoppingcartService;
 
 	/**
 	 * 商品をカートに追加する.
 	 * 
-	 * @param form ショッピングカートフォーム
+	 * @param form  ショッピングカートフォーム
+	 * @param model モデル
 	 * @return toCartへリダイレクト
 	 */
 	@PostMapping("/insertCart")
 	public String insertCart(ShoppingCartForm form, Model model, @AuthenticationPrincipal LoginUser loginUser) {
+
 
 		UserInfo user = loginUser.getUserInfo();
 		shoppingcartService.insertCat(form, user.getId());
@@ -50,6 +49,8 @@ public class ShoppingCartController {
 	/**
 	 * カートリストを表示.
 	 * 
+	 * @param form  ショッピングカートフォーム
+	 * @param model モデル
 	 * @return カートリスト
 	 */
 	@GetMapping("/toCart")
@@ -58,9 +59,7 @@ public class ShoppingCartController {
 		UserInfo user = loginUser.getUserInfo();
 
 		Order orderList = shoppingcartService.showCart(user.getId());
-
 		model.addAttribute("order", orderList);
-		System.out.println(orderList);
 
 		return "/materialize-version/cart_list";
 	}
@@ -68,6 +67,8 @@ public class ShoppingCartController {
 	/**
 	 * カートの中身表示.
 	 * 
+	 * @param form  ショッピングカートフォーム
+	 * @param model モデル * @return カートリスト
 	 * @return カートリスト
 	 */
 	@GetMapping("/showCart")
@@ -75,21 +76,33 @@ public class ShoppingCartController {
 		UserInfo user = loginUser.getUserInfo();
 
 		Order orderList = shoppingcartService.showCart(user.getId());
-
 		model.addAttribute("order", orderList);
 		return "/materialize-version/cart_list";
 	}
 
 	/**
-	 * 注文商品削除.
+	 * カート商品削除.
 	 * 
 	 * @param orderItemId 注文商品ID
 	 * @return toCartへリダイレクト
 	 */
 	@GetMapping("/deleteCart")
 	public String deleteCartItems(Integer orderItemId) {
-		shoppingcartService.deleteCartContents(orderItemId);
+		shoppingcartService.deleteByOrderId(orderItemId);
 
+		return "redirect:/shoppingCart/toCart";
+	}
+
+	/**
+	 * カート商品を一括削除する.
+	 * 
+	 * @param orderId オーダーアイテムId
+	 * @return toCartへリダイレクト
+	 */
+	@GetMapping("/allDeleteOrderItem")
+	public String allDeleteOrderItem(Integer orderId) {
+
+		shoppingcartService.allDeleteOrderItem(orderId);
 		return "redirect:/shoppingCart/toCart";
 	}
 
