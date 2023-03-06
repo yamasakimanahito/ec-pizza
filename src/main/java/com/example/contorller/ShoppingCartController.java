@@ -60,7 +60,6 @@ public class ShoppingCartController {
 
 		Order orderList = shoppingcartService.showCart(1);
 		model.addAttribute("order", orderList);
-		System.out.println(orderList);
 
 		return "/materialize-version/cart_list";
 	}
@@ -73,11 +72,10 @@ public class ShoppingCartController {
 	 * @return カートリスト
 	 */
 	@GetMapping("/showCart")
-	public String showCart(ShoppingCartForm form, Model model) {
+	public String showCart( Model model) {
 		UserInfo user = (UserInfo) session.getAttribute("User");
 
-		Order orderList = shoppingcartService.showCart(user.getId());
-		System.out.println(orderList);
+		Order orderList = shoppingcartService.showCart(1);
 		model.addAttribute("order", orderList);
 		return "/materialize-version/cart_list";
 	}

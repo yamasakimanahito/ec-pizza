@@ -49,7 +49,7 @@ public class ShoppingCartService {
 	public void insertCat(ShoppingCartForm form, Integer userId) {
 		Order order = orderRepository.findByUserIdAndStatus(userId, 0);
 		Order orderObject = new Order();
-		// オーダーテーブルにユーザー情報がない時注文テーブにインサート
+		// オーダーテーブルにユーザー情報がない場合注文テーブにインサート
 		if (order == null) {
 			orderObject.setUserId(userId);
 			orderObject.setStatus(0);

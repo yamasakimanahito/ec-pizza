@@ -30,19 +30,23 @@ import com.example.domain.Topping;
 public class OrderRepository {
 
 	/**
-	 * 注文、注文商品、注文トッピングを結合します.
+	 *
+	 * 注文、注文商品、注文トッピングテーブルを結合したものから注文リストを作成する.
+	 * 注文オブジェクト内には注文商品リストを、注文商品には注文トッピングリストを格納する。
 	 */
 	private static final ResultSetExtractor<List<Order>> ORDER_RESULT_SET_EXTRACTOR = (rs) -> {
-
+		// 注文が入るorderList 注文商品が入るorderItemList 注文トッピングが入るorderToppingsListを作成
 		List<Order> orderList = new LinkedList<Order>();
 		List<OrderItem> orderItemList = null;
 		List<OrderTopping> orderToppingsList = null;
 
+		// 前の行の注文ID、注文商品IDを退避しておく変数
 		long beforeorderId = 0;
 		long beforeOrderItemId = 0;
 
 		while (rs.next()) {
 
+			// 現在検索されているID
 			int nowOrderId = rs.getInt("id");
 
 			// 注文
@@ -65,7 +69,7 @@ public class OrderRepository {
 			}
 
 			int nowOrderItemId = rs.getInt("oi_id");
-             //注文商品
+			// 注文商品
 			if (beforeOrderItemId != nowOrderItemId) {
 				OrderItem orderItem = new OrderItem();
 				orderItem.setId(rs.getInt("oi_id"));
@@ -73,6 +77,7 @@ public class OrderRepository {
 				orderItem.setOrderId(rs.getInt("oi_order_id"));
 				orderItem.setQuantity(rs.getInt("oi_quantity"));
 				orderItem.setSize(rs.getString("oi_size"));
+				// 商品オブジェクトに格納
 				Item item = new Item();
 				item.setId(rs.getInt("i_id"));
 				item.setName(rs.getString("i_name"));
@@ -85,12 +90,13 @@ public class OrderRepository {
 				orderItem.setOrderToppingList(orderToppingsList);
 				orderItemList.add(orderItem);
 			}
-			//注文トッピング
+			// 注文トッピング
 			if (rs.getInt("ot_id") != 0) {
 				OrderTopping orderTopping = new OrderTopping();
 				orderTopping.setId(rs.getInt("ot_id"));
 				orderTopping.setToppingId(rs.getInt("ot_topping_id"));
 				orderTopping.setOrderItemId(rs.getInt("ot_order_item_id"));
+				// トッピングオブジェクトに格納
 				Topping topping = new Topping();
 				topping.setId(rs.getInt("t_id"));
 				topping.setName(rs.getString("t_name"));
@@ -105,8 +111,7 @@ public class OrderRepository {
 		}
 		return orderList;
 	};
-	
-	
+
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 
@@ -158,7 +163,8 @@ public class OrderRepository {
 				+ "i.id  as i_id, i.name as i_name , i.description as i_description , i.price_m as i_price_m , i.price_l as i_price_l , i.image_path as i_image_path,\n"
 				+ "t.id as t_id ,t.name as t_name , t.price_m as t_price_m , t.price_l as t_price_l\n"
 				+ "from orders o\n" + "left join order_items oi on o.id = oi.order_id \n"
-				+ "Left join order_toppings ot on oi.id = ot.order_item_id \n" + "left join items i on i.id = oi.item_id \n"
+				+ "Left join order_toppings ot on oi.id = ot.order_item_id \n"
+				+ "left join items i on i.id = oi.item_id \n"
 				+ "left join toppings t on t.id = ot.topping_id where o.id =:id;";
 
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
