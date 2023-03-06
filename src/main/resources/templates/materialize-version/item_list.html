@@ -124,5 +124,18 @@
     </footer>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script th:src="@{/js/paginathing.min.js}"></script>
+     <script>
+			$(function() { //従業員リストページング
+				$('.items').paginathing({//親要素のclassを記述
+					perPage: 6,//1ページあたりの表示件数
+					prevText:'前へ',//1つ前のページへ移動するボタンのテキスト
+					nextText:'次へ',//1つ次のページへ移動するボタンのテキスト
+					activeClass: 'navi-active',//現在のページ番号に任意のclassを付与できます
+					insertAfter: null,
+				});
+			});
+
+    </script>
   </body>
 </html>
