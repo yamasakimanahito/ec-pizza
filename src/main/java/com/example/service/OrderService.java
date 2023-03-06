@@ -32,7 +32,11 @@ public class OrderService {
 	 */
 	public Order order(OrderForm form) {
 		Order order = orderRepository.load(Integer.parseInt(form.getId()));
-		order.setStatus(form.getStatus());
+		
+		java.sql.Date today = new java.sql.Date(new Date().getTime());
+		order.setOrderDate(today);
+		order.setStatus(form.getPaymentMethod());
+		order.setTotalPrice(order.getCalcTotalPrice());
 		order.setDestinationName(form.getDestinationName());
 		order.setDestinationEmail(form.getDestinationEmail());
 		order.setDestinationZipcode(form.getDestinationZipcode());

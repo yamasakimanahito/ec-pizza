@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.LoginUser;
 import com.example.domain.Order;
+import com.example.domain.UserInfo;
 import com.example.form.OrderForm;
 import com.example.service.OrderConfirmService;
 import com.example.service.OrderService;
@@ -45,6 +46,14 @@ public class OrderController {
 	@GetMapping("/toOrderConfirm")
 	public String orderConfirm(OrderForm form, Integer orderId, Model model,
 			@AuthenticationPrincipal LoginUser loginUser) {
+		UserInfo user = loginUser.getUserInfo();
+		form.setDestinationName(user.getName());
+		form.setDestinationEmail(user.getEmail());
+		form.setDestinationAddress(user.getAddress());
+		form.setDestinationZipcode(user.getZipcode());
+		form.setDestinationTel(user.getTelephone());
+		
+		
 		Order orderList = orderConfirmService.GetOrderId(orderId);
 		model.addAttribute("order", orderList);
 		return "/materialize-version/order_confirm";
@@ -94,12 +103,11 @@ public class OrderController {
 
 		if (result.hasErrors()) {
 			return orderConfirm(form, form.getIntId(), model, loginUser);
-		}
 
+		}
 		orderService.order(form);
 
 		return "/materialize-version/order_finished";
 
 	}
-
 }
