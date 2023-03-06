@@ -1,11 +1,9 @@
 package com.example.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
@@ -33,15 +31,14 @@ public class OrderToppingRepository {
 	 * @param employee 従業員情報
 	 * @return インサートした従業員情報
 	 */
-	synchronized public OrderTopping  insert(OrderTopping orderTopping) {
+	synchronized public OrderTopping insert(OrderTopping orderTopping) {
 
 		SqlParameterSource param = new BeanPropertySqlParameterSource(orderTopping);
 
 		// インサート処理
-		String insertSql = "INSERT INTO order_toppings(topping_id,order_item_id) "
-				+ " VALUES(:toppingId,:orderItemId)";
+		String insertSql = "INSERT INTO order_toppings(topping_id,order_item_id) " + " VALUES(:toppingId,:orderItemId)";
 		template.update(insertSql, param);
-return orderTopping;
+		return orderTopping;
 	}
 
 }

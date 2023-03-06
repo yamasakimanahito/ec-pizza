@@ -34,29 +34,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ラクラクピザ</title>
-  </head>
-  <body>
-    <header>
+    </head>
+ <header>
       <div class="container">
         <div class="header">
           <div class="header-left">
+
            <a th:href="@{/}">
               <img class="logo" th:src="@{/img/header_logo.png}" />
             </a>
           </div>
 
-          <a th:href="@{/}">商品一覧</a>
+          <div class="header-right">
+           <a th:href="@{/}">商品一覧</a>
             <span sec:authorize="!isAuthenticated()"><a th:href="@{/resister/toResister}">会員登録</a></span>
             <a th:href="@{/shoppingCart/toCart}"><i class="fas fa-shopping-cart"></i>カート</a>
            <span sec:authorize="!isAuthenticated()"><a th:href="@{/toLogin}">ログイン</a></span>
            <span sec:authorize="isAuthenticated()"><a th:href="@{/logout}">ログアウト</a></span>
 
 
-
-					<a href="order_history.html">注文履歴</a>
-				</div>
-			</div>
-	</header>
+            <a href="order_history.html">注文履歴</a>
+          </div>
+        </div>
+      </div>
+    </header>
 	<form th:action="@{/shoppingCart/insertCart}"
 		th:object="${shoppingCartForm}" method="post">
 		<div class="top-wrapper">
