@@ -6,7 +6,7 @@ package com.example.domain;
  * @author yoshimatsushouta
  *
  */
-public class User {
+public class UserInfo {
 	/** ユーザーID */
 	private Integer id;
 	/** 顧客氏名 */
@@ -80,7 +80,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", zipcode="
+		return "UserInfo [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", zipcode="
 				+ zipcode + ", address=" + address + ", telephone=" + telephone + "]";
 	}
 }

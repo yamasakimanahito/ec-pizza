@@ -1,20 +1,16 @@
 package com.example.contorller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.domain.Item;
+import com.example.domain.LoginUser;
 import com.example.domain.Order;
-import com.example.domain.OrderItem;
-import com.example.domain.User;
+import com.example.domain.UserInfo;
 import com.example.form.ShoppingCartForm;
 import com.example.service.ShoppingCartService;
 
@@ -43,16 +39,11 @@ public class ShoppingCartController {
 	 * @return toCartへリダイレクト
 	 */
 	@PostMapping("/insertCart")
-	public String insertCart( ShoppingCartForm form,  Model model) {
-		System.out.println(form.getQuantity());
+	public String insertCart(ShoppingCartForm form, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 
-		User user = (User) session.getAttribute("User");
-		shoppingcartService.insertCat(form, 1);
-		// 税金計算
-		Order order = new Order();
-		OrderItem orderItem = new OrderItem();
-//		 order.setCalcTotalPrice(form.getToppingIdList(), form.getQuantity(), form.getSize());
-//		 order.setTax(order.getCalcTotalPrice());
+		UserInfo user = loginUser.getUserInfo();
+		shoppingcartService.insertCat(form, user.getId());
+
 		return "redirect:/shoppingCart/toCart";
 	}
 
@@ -62,11 +53,11 @@ public class ShoppingCartController {
 	 * @return カートリスト
 	 */
 	@GetMapping("/toCart")
-	public String toCartList(Model model) {
+	public String toCartList(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 
-		User user = (User) session.getAttribute("User");
+		UserInfo user = loginUser.getUserInfo();
 
-		Order orderList = shoppingcartService.showCart(1);
+		Order orderList = shoppingcartService.showCart(user.getId());
 
 		model.addAttribute("order", orderList);
 		System.out.println(orderList);
@@ -80,10 +71,10 @@ public class ShoppingCartController {
 	 * @return カートリスト
 	 */
 	@GetMapping("/showCart")
-	public String showCart(Model model) {
-		User user = (User) session.getAttribute("User");
+	public String showCart(Model model, @AuthenticationPrincipal LoginUser loginUser) {
+		UserInfo user = loginUser.getUserInfo();
 
-		Order orderList = shoppingcartService.showCart(1);
+		Order orderList = shoppingcartService.showCart(user.getId());
 
 		model.addAttribute("order", orderList);
 		return "/materialize-version/cart_list";

@@ -36,7 +36,7 @@ public class Order {
 	/** 支払い方法 */
 	private Integer paymentMethod;
 	/** ユーザー情報 */
-	private User user;
+	private UserInfo user;
 	/** 注文商品リスト */
 	private List<OrderItem> orderItemList;
 
@@ -163,11 +163,11 @@ public class Order {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public User getUser() {
+	public UserInfo getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(UserInfo user) {
 		this.user = user;
 	}
 

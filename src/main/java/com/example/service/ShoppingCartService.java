@@ -61,7 +61,7 @@ public class ShoppingCartService {
 		Order orderObject = new Order();
 		if (order == null) {
 			// 注文 ユーザidは仮で１
-			orderObject.setUserId(1);
+			orderObject.setUserId(userId);
 			orderObject.setStatus(0);
 			orderObject.setTotalPrice(0);
 			orderRepository.insert(orderObject);
@@ -79,11 +79,14 @@ public class ShoppingCartService {
 		} else {
 			orderItem.setOrderId(orderObject.getId());
 		}
-		
+
 		OrderItem orderItemInfo = orderitemRepository.insert(orderItem);
 		// 注文トッピング //nullの時は何もしない
 		OrderTopping orderTopping = new OrderTopping();
+		System.out.println("中身確認" + form.getToppingIdList());
+
 		if (form.getToppingIdList() != null) {
+			System.out.println("インサート");
 			for (Integer t : form.getToppingIdList()) {
 				orderTopping.setToppingId(t);
 				orderTopping.setOrderItemId(orderItemInfo.getId());
@@ -114,6 +117,7 @@ public class ShoppingCartService {
 
 	/**
 	 * 削除.
+	 * 
 	 * @param orderItemId
 	 * @return
 	 */

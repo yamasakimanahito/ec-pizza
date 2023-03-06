@@ -33,21 +33,33 @@ public class OrderItem {
 	public int getSubTotalPrice() {
 		int subtotalL = 0;
 		int subtotalM = 0;
-		int subtotal = 0;
-		for (OrderTopping orderToppingList : this.getOrderToppingList()) {
-			if (this.size.equals("L")) {
+		int nulltotalL = 0;
+		int nulltotalM = 0;
+			System.out.println(this.getOrderToppingList().size());
+			
+			
+			if (this.getOrderToppingList().isEmpty() && this.size.equals("L")) {
+				nulltotalL = this.quantity * this.item.getPriceL(); 
+				return nulltotalL;
+			
+		    }else if (this.size.equals("L")) {
 
-				subtotalL = (this.quantity * orderToppingList.getTopping().getPriceL())
-						+ (this.quantity * (this.getOrderToppingList().size() * this.item.getPriceL()));
+				subtotalL = (this.quantity * this.item.getPriceL())
+						+ (this.quantity * (this.getOrderToppingList().size() * 300));
 				return subtotalL;
-			} else if (this.size.equals("M")) {
-				subtotalM = (this.quantity * orderToppingList.getTopping().getPriceM())
-						+ (this.quantity * (this.getOrderToppingList().size() * this.item.getPriceM()));
+
+			} 
+			
+			if (this.getOrderToppingList().isEmpty() && this.size.equals("M")) {
+				nulltotalM = this.quantity * this.item.getPriceM();
+				return nulltotalM;
+			} else if(this.size.equals("M")){
+				subtotalM = (this.quantity * this.item.getPriceM())
+						+ (this.quantity * (this.getOrderToppingList().size() * 200));
 				return subtotalM;
-			} else {
 			}
 
-		}
+		
 		return 0;
 	}
 
