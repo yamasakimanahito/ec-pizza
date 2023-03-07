@@ -31,13 +31,12 @@
 	color: white;
 	background-color: #10673c;
 	padding: 6px 200px;
-	bottom: 300px;
-	margin-left: 100px;
+		margin:auto;
+	
 }
 
 .menyureturn-display {
 	text-align: center;
-	margin: 0 130px 0 0;
 }
 
 .fa-caret-square-left {
@@ -56,15 +55,15 @@
 	border: solid 3px #CCC;
 	letter-spacing: normal;
 	line-height: 18px;
-	margin-left: 500px;
 	margin-bottom: 30px;
 	padding: 10px 10px 10px 0;
 	font-size: 20px;
+	margin:auto;
+	margin-bottom: 20px;
 }
 
 .cart-total-price {
 	font-size: 35px;
-   margin-right:184px;
 	background-color: #FCE9E9;
 	width:1140px;
 }
