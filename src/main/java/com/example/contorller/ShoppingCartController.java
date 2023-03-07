@@ -14,7 +14,6 @@ import com.example.domain.UserInfo;
 import com.example.form.ShoppingCartForm;
 import com.example.service.ShoppingCartService;
 
-
 /**
  * カート関連コントローラー.
  * 
@@ -25,7 +24,6 @@ import com.example.service.ShoppingCartService;
 @RequestMapping("/shoppingCart")
 public class ShoppingCartController {
 
-	
 	@Autowired
 	private ShoppingCartService shoppingcartService;
 
@@ -38,7 +36,6 @@ public class ShoppingCartController {
 	 */
 	@PostMapping("/insertCart")
 	public String insertCart(ShoppingCartForm form, Model model, @AuthenticationPrincipal LoginUser loginUser) {
-
 
 		UserInfo user = loginUser.getUserInfo();
 		shoppingcartService.insertCat(form, user.getId());
@@ -72,6 +69,7 @@ public class ShoppingCartController {
 	 * @return カートリスト
 	 */
 	@GetMapping("/showCart")
+
 	public String showCart(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		UserInfo user = loginUser.getUserInfo();
 
