@@ -25,11 +25,11 @@ public class SecurityConfig {
 
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//		http.authorizeHttpRequests() // 認可に関する設定
+//		http.authorizeHttpRequests() 
 //				.requestMatchers("/", "/toInsert", "/insert").permitAll();
 //		http.authorizeHttpRequests(authz -> authz.requestMatchers("/**").permitAll());
 
-		http.authorizeHttpRequests() // 認可に関する設定
+		http.authorizeHttpRequests() 
 				.requestMatchers("/Login/toLogin", "/resister/resisterUser", "/resister/toResister", "/findByName", "/",
 						"/ShowItemDetail/ToItemDetail")
 				.permitAll() // 「/」などのパスは全てのユーザに許可

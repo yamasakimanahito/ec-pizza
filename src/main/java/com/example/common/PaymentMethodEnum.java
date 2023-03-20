@@ -9,14 +9,14 @@ package com.example.common;
 public enum PaymentMethodEnum {
 	COD(1, "代金引換"), CREDIT_CARD(2, "クレジットカード");
 
-	// 定数に含めるフィールド、コンストラクタ、メソッドを定義
+	
 	/** 現在のステータス */
 	private final int paymentMethodValue;
 	/** 支払い方法 */
 	private final String paymentMethodName;
 
 	/**
-	 * コンストラクタ。
+	 * コンストラクタ.
 	 */
 	private PaymentMethodEnum(int paymentMethodValue, String paymentMethodName) {
 		this.paymentMethodValue = paymentMethodValue;
